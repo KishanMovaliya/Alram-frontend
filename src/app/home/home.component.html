@@ -1,0 +1,128 @@
+<app-loading-spinner *ngIf=showSpinner></app-loading-spinner>
+<div class="container mainclass" *ngIf="getShedule?.length > 0;else emptyShedule" >
+  <div>
+    <!-------------------------Update email shedule form ---------------------------------------->
+    <form action="javascript:void(0)" [formGroup]="clockForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row" *ngFor="let shedule of getShedule; let i=index">
+        <!-- choose time -->
+        <label for="alarmTime" class="">Choose time </label>
+        <input class="form-control-plaintext" formControlName="time" placeholder="{{shedule.time | date: 'h:mm:ss a' }}"
+          [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
+        <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+
+        <!-----------------------Select custom days------------------------------------------>
+        <div>
+          <p>
+            <button type="button" class="btn btn-outline-primary" (click)="clickselect(i)"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              Select custom Days
+            </button>
+          </p>
+          <div id="i" *ngIf="showMyContainer && i==indexvalue">
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group">
+                  <div class="form-check">
+                    <div *ngFor="let item of days">
+                      <input class="form-check-input" type="checkbox" [checked]="getSelection(item)"
+                        (change)="changeHandler(item, $event)" formControlName="day" />
+                      <label class="form-check-label">{{item.day}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ----------------------------On Off Button------------------------------------->
+        <div class="toogleclass">
+          <div> 
+            <ui-switch [(ngModel)]="shedule.status" (valueChange)="onValueChange($event)" (click)="getid(shedule._id)"
+              formControlName="status" uncheckedLabel="off" checkedLabel="on">
+            </ui-switch>
+          </div>
+        </div>
+        <!------------------------------update shedule--------------------------------------- -->
+        <button type="submit" class="btn btn-dark btn-block setclass">
+          <i class="fa fa-plus-circle mr-1"></i> Set Shedule
+        </button>
+        <!------------------------------ Delete Shdeule ----------------------------------------->
+        <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
+          <button type="button" class="btn btn-danger">Delete</button>
+        </span>
+      </div>
+    </form>
+
+      <!-------------------------------- setnew shedule Form-------------------------------------------------->
+    <hr>
+    <div class="newaddform">
+      <img class="plusicon" (click)="isCollapsedd = !isCollapsedd" [attr.aria-expanded]="!isCollapsedd"
+        aria-controls="collapseExample" src="../../assets/plus-symbol-in-a-rounded-black-square.png">
+    </div>
+    <div id="collapseExample" [ngbCollapse]="isCollapsedd">
+      <div class="card">
+        <form [formGroup]="clockForm" (ngSubmit)='onSubmits()'>
+        <div class="card-body">
+            <!----------------------Select Time ---------------------------------------------------------- -->
+            <div class="form-group">
+              <label for="exampleInputEmail1">Select Time</label>
+              <input class="form-control " placeholder="Select Time" formControlName="time" [owlDateTimeTrigger]="dt4"
+                [owlDateTime]="dt4">
+              <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+            </div>
+
+            <!----------------------Select Date ---------------------------------------------------------- -->
+            <div class="form-group">
+              <label class="labelclass">
+                Date
+                <input class="form-control" placeholder="Select The date" formControlName="date"
+                  [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+                <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+              </label>
+            </div>
+            <!----------------------------------Choose Step dAys ------------------------------------------------>
+            <div class="form-group">
+              <select class="custom-select" (change)="changedays($event)" formControlName="stepday">
+                <option value="">Choose your Days Step</option>
+                <option *ngFor="let item of collection" [ngValue]="item">{{item}}</option>
+              </select>
+            </div>
+            <!----------------------Select Custome days ---------------------------------------------------------- -->
+            <div>
+              <p>
+                <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                  Select custom Days
+                </button>
+              </p>
+              <div id="collapseExample" [ngbCollapse]="isCollapsed">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <div class="form-check">
+                        <div *ngFor="let item of days">
+                          <input class="form-check-input" type="checkbox" [checked]="getSelection(item)"
+                            (change)="changeHandler(item, $event)" formControlName="day" />
+                          <label class="form-check-label">{{item.day}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!----------------------Submit ---------------------------------------------------------- -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyShedule>
+  <div *ngIf="!showSpinner">
+    <h1 class="emptyShedule">No Shedule Found</h1>
+  </div>
+</ng-template>

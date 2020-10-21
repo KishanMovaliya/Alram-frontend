@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Login</h1>
+  <form [formGroup]="loginForm" (submit)="loginUser()">
+    <!---------------------------- Email Feild ---------------------------------------------------->
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+
+    <!---------------------------- Password Feild ---------------------------------------------------->
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" formControlName="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form><hr>
+
+    <button type="submit" routerLink="/registration" class="btn btn-primary">Signup</button>
+</div>
