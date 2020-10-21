@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SnoozeService } from '../service/snooze.service';
+
 
 
 @Component({
@@ -35,6 +37,11 @@ export class HomeComponent implements OnInit {
   collection = []
   mySubscription: any;
   showSpinner: boolean = true;
+
+  getstop=[]
+  getSheduleSnooze: any = []
+  onSnoozelimit:any;
+  idgets='';
 
   //-----------Option days----------------------------------------
   days = [
@@ -73,7 +80,7 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(public authService: AuthapiService,
-    public formBuilder: FormBuilder, public router: Router,) {
+    public formBuilder: FormBuilder, public router: Router,public Authservice:SnoozeService) {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.emailget = this.currentUser.userCredentials.email
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -86,6 +93,8 @@ export class HomeComponent implements OnInit {
         this.router.navigated = false;
       }
     });
+
+    //-----------for day list-----------------------------
     for (let i = 1; i <= 10; i++) {
       this.collection.push(`${i}`);
     }
@@ -98,6 +107,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.createalaramForm()
+
+    //--------------------get the Email shedule----------------------------
     this.authService.getemailshedules().subscribe((res: any) => {
       this.getemail = [res];
       this.getemail.map(ress => {
@@ -108,10 +119,20 @@ export class HomeComponent implements OnInit {
         this.showSpinner = false
 
       })
-    },
-      error => {
-        console.log(error)
-      }
+    }
+    )
+
+//-----------------------Getsnooze limits-----------------------------------
+    this.Authservice.getsnoozeshedules().subscribe((res: any) => {
+      this.getstop = [res];
+      this.getstop.map(ress => {
+        this.getSheduleSnooze = ress.data
+        this.getSheduleSnooze.map(a => {
+          this.onSnoozelimit=a.limitsend
+          this.idgets = a._id
+        })
+      })
+    }
     )
   }
 
@@ -152,8 +173,6 @@ export class HomeComponent implements OnInit {
       this.authService.updateStatus(this.idget, this.clockForm.value)
         .subscribe(res => {
         })
-    } else {
-      console.log("error")
     }
   }
 
@@ -235,7 +254,6 @@ export class HomeComponent implements OnInit {
   deleteshed(id){
     this.idget=id
     this.authService.deleteshedule(this.idget).subscribe((data)=>{
-      console.log("sucess")
     })
   }
 

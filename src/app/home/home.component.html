@@ -51,6 +51,10 @@
         <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
           <button type="button" class="btn btn-danger">Delete</button>
         </span>
+        <!------------------------------ Snooze badge --------------------------------------------->
+        <div class="badgeclass">
+          <button type="button" [routerLink]="['/snoozegetOn']" class="btn btn-warning">Snooze Left<span class="badge badge-light">{{this.onSnoozelimit}}</span></button>
+        </div>
       </div>
     </form>
 

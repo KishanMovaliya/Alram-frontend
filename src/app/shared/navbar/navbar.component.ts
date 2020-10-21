@@ -38,9 +38,7 @@ export class NavbarComponent implements OnInit {
     if(this.userName){
       this.username=this.userName
     }
-    else{ 
-      console.log("not found")
-    }
+    
   }
  
   //-------------logout ---------------------------------------------------

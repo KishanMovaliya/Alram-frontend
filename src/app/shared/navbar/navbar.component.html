@@ -37,7 +37,7 @@
 
       <!--------------------------------currentUser show-------------------------------------------------------------- -->
       <li class="nav-item">
-        <a class="nav-link" *ngIf=currentUser routerLinkActive="active">{{username}}</a>
+        <a class="nav-link" *ngIf=currentUser [routerLink]="['/profileget']" routerLinkActive="active">{{username}}</a>
       </li>
 
       <!--------------------------------profile user show-------------------------------------------------------------- -->
