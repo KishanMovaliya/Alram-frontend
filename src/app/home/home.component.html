@@ -1,10 +1,10 @@
 <app-loading-spinner *ngIf=showSpinner></app-loading-spinner>
-<div class="container mainclass" *ngIf="getShedule?.length > 0;else emptyShedule" >
+<div class="container mainclass" *ngIf="getShedule?.length > 0;else emptyShedule">
   <div>
     <!-------------------------Update email shedule form ---------------------------------------->
     <form action="javascript:void(0)" [formGroup]="clockForm" (ngSubmit)="onSubmit()">
       <div class="form-group row" *ngFor="let shedule of getShedule; let i=index">
-        <!-- choose time -->
+        <!--------------------- choose time ----------------------------------------------------->
         <label for="alarmTime" class="">Choose time </label>
         <input class="form-control-plaintext" formControlName="time" placeholder="{{shedule.time | date: 'h:mm:ss a' }}"
           [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
@@ -37,7 +37,7 @@
 
         <!-- ----------------------------On Off Button------------------------------------->
         <div class="toogleclass">
-          <div> 
+          <div>
             <ui-switch [(ngModel)]="shedule.status" (valueChange)="onValueChange($event)" (click)="getid(shedule._id)"
               formControlName="status" uncheckedLabel="off" checkedLabel="on">
             </ui-switch>
@@ -52,13 +52,15 @@
           <button type="button" class="btn btn-danger">Delete</button>
         </span>
         <!------------------------------ Snooze badge --------------------------------------------->
-        <div class="badgeclass">
-          <button type="button" [routerLink]="['/snoozegetOn']" class="btn btn-warning">Snooze Left<span class="badge badge-light">{{this.onSnoozelimit}}</span></button>
-        </div>
+        <!-- <div class="badgeclass" *ngIf=getSheduleSnooze>
+          <div *ngFor="let itemget of getSheduleSnooze"> 
+            <button type="button" [routerLink]="['/snoozegetOn']" class="btn btn-warning">Snooze Left<span class="badge badge-light"  >{{itemget.limitsend}}</span></button>
+          </div>
+        </div> -->
       </div>
     </form>
 
-      <!-------------------------------- setnew shedule Form-------------------------------------------------->
+    <!-------------------------------- setnew shedule Form-------------------------------------------------->
     <hr>
     <div class="newaddform">
       <img class="plusicon" (click)="isCollapsedd = !isCollapsedd" [attr.aria-expanded]="!isCollapsedd"
@@ -67,7 +69,7 @@
     <div id="collapseExample" [ngbCollapse]="isCollapsedd">
       <div class="card">
         <form [formGroup]="clockForm" (ngSubmit)='onSubmits()'>
-        <div class="card-body">
+          <div class="card-body">
             <!----------------------Select Time ---------------------------------------------------------- -->
             <div class="form-group">
               <label for="exampleInputEmail1">Select Time</label>
@@ -118,8 +120,8 @@
             </div>
             <!----------------------Submit ---------------------------------------------------------- -->
             <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
+          </div>
+        </form>
       </div>
     </div>
   </div>

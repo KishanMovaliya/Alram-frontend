@@ -33,15 +33,15 @@ export class HomeComponent implements OnInit {
   open = false
   indexvalue = null;
   public status: Boolean
-  valueChange = " ";
+  valueChange = "";
   collection = []
   mySubscription: any;
   showSpinner: boolean = true;
 
-  getstop=[]
+  getstop = []
   getSheduleSnooze: any = []
-  onSnoozelimit:any;
-  idgets='';
+  onSnoozelimit: any;
+  idgets = '';
 
   //-----------Option days----------------------------------------
   days = [
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(public authService: AuthapiService,
-    public formBuilder: FormBuilder, public router: Router,public Authservice:SnoozeService) {
+    public formBuilder: FormBuilder, public router: Router, public Authservice: SnoozeService) {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.emailget = this.currentUser.userCredentials.email
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -122,18 +122,18 @@ export class HomeComponent implements OnInit {
     }
     )
 
-//-----------------------Getsnooze limits-----------------------------------
-    this.Authservice.getsnoozeshedules().subscribe((res: any) => {
-      this.getstop = [res];
-      this.getstop.map(ress => {
-        this.getSheduleSnooze = ress.data
-        this.getSheduleSnooze.map(a => {
-          this.onSnoozelimit=a.limitsend
-          this.idgets = a._id
-        })
-      })
-    }
-    )
+    //-----------------------Getsnooze limits-----------------------------------
+    //   this.Authservice.getsnoozeshedules().subscribe((res: any) => {
+    //     this.getstop = [res];
+    //     this.getstop.map(ress => {
+    //       this.getSheduleSnooze = ress.data
+    //       this.getSheduleSnooze.map(a => {
+    //         this.onSnoozelimit=a.limitsend
+    //         this.idgets = a._id
+    //       })
+    //     })
+    //   }
+    //   )
   }
 
 
@@ -163,6 +163,7 @@ export class HomeComponent implements OnInit {
   //-----------on off value changes----------------------------------------
   onValueChange(value) {
     this.valueChange = value;
+    console.log("valuchanges", this.valueChange)
   }
 
   //-----------on off status-----------------------------------------------
@@ -213,6 +214,7 @@ export class HomeComponent implements OnInit {
     this.submitted = true
     this.clockForm.value.day = this.selection
     this.clockForm.value.status = this.valueChange
+    console.log(this.clockForm.value)
     this.authService.updateshedule(this.idget, this.clockForm.value)
       .subscribe(res => {
         this.router.navigate(['/'])
@@ -251,46 +253,46 @@ export class HomeComponent implements OnInit {
 
   }
 
-  deleteshed(id){
-    this.idget=id
-    this.authService.deleteshedule(this.idget).subscribe((data)=>{
+  deleteshed(id) {
+    this.idget = id
+    this.authService.deleteshedule(this.idget).subscribe((data) => {
     })
   }
 
-//-------------delete shedule-----------------------------------------
-removeshedule(shedule, index) {
-  Swal.fire({
-    title: 'Are you sure want to Delete Employee?',
+  //-------------delete shedule-----------------------------------------
+  removeshedule(shedule, index) {
+    Swal.fire({
+      title: 'Are you sure want to Delete Employee?',
 
-    text: 'Delete The Employee !',
+      text: 'Delete The Employee !',
 
-    icon: 'warning',
+      icon: 'warning',
 
-    showCancelButton: true,
+      showCancelButton: true,
 
-    confirmButtonText: 'Yes, Delete it!',
+      confirmButtonText: 'Yes, Delete it!',
 
-    cancelButtonText: 'No, keep it'
+      cancelButtonText: 'No, keep it'
 
-  }).then((result) => {
-    if (result.value) {
-      this.authService.deleteshedule(shedule._id).subscribe((data) => {
-        this.getShedule.splice(index, 1);
-      })
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire(
+    }).then((result) => {
+      if (result.value) {
+        this.authService.deleteshedule(shedule._id).subscribe((data) => {
+          this.getShedule.splice(index, 1);
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
 
-        'Cancelled',
+          'Cancelled',
 
-        'welcomeback :)',
+          'welcomeback :)',
 
-        'error'
+          'error'
 
-      )
+        )
 
-    }
+      }
 
-  })
-}
+    })
+  }
 
 }
