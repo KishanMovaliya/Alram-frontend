@@ -27,6 +27,7 @@ import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,7 @@ import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
     ShecduleComponent,
     ProfileComponent,
     LoadingSpinnerComponent,
-    SnoozeOnComponent
+    SnoozeOnComponent,
    
   
   ],

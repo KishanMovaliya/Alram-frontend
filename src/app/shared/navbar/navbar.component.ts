@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
+import { SnoozeService } from 'src/app/service/snooze.service';
 import Swal from 'sweetalert2';
 
 
@@ -14,8 +15,11 @@ export class NavbarComponent implements OnInit {
   username: ''
   userName:''
   mySubscription: any;
+  notification:any
+  notific:any;
+  getSheduleSnooze:any
 
-  constructor(public router: Router, public authService: AuthapiService) {
+  constructor(public router: Router, public authService: AuthapiService,public Authservice: SnoozeService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -38,6 +42,19 @@ export class NavbarComponent implements OnInit {
     if(this.userName){
       this.username=this.userName
     }
+
+       this.Authservice.getsnoozeshedules().subscribe((res: any) => {
+        this.notific = [res];
+        this.notific.map(ress => {
+          this.getSheduleSnooze = ress.data
+          console.log(this.getSheduleSnooze)
+          this.getSheduleSnooze.map(a => {
+           this.notification=a.notification
+           console.log(this.notification)
+          })
+        })
+      }
+      )
     
   }
  
