@@ -17,7 +17,10 @@ export class NavbarComponent implements OnInit {
   mySubscription: any;
   notification:any
   notific:any;
-  getSheduleSnooze:any
+  getnotified:any
+  time_get_create:any
+  messageget:any
+  fromuser:any
 
   constructor(public router: Router, public authService: AuthapiService,public Authservice: SnoozeService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -43,14 +46,15 @@ export class NavbarComponent implements OnInit {
       this.username=this.userName
     }
 
-       this.Authservice.getsnoozeshedules().subscribe((res: any) => {
+       this.Authservice.notificationget().subscribe((res: any) => {
         this.notific = [res];
         this.notific.map(ress => {
-          this.getSheduleSnooze = ress.data
-          console.log(this.getSheduleSnooze)
-          this.getSheduleSnooze.map(a => {
-           this.notification=a.notification
-           console.log(this.notification)
+          this.getnotified = ress.data
+          console.log(this.getnotified)
+          this.getnotified.map(a => {
+           this.time_get_create=a.createdAt
+           this.messageget=a.message
+           this.fromuser=a.from
           })
         })
       }

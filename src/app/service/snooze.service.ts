@@ -23,6 +23,11 @@ export class SnoozeService {
     return this.http.put(url, data, { headers: this.headers }).pipe(
     )
   }
+  //get notification
+  notificationget(){
+     return this.http.get(`${this.baseUri}user/getnotification`)
+  }
 }
+
 
 

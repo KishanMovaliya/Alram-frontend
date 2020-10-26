@@ -9,7 +9,7 @@ import { EmployeeEditComponent } from './components/employee-edit/employee-edit.
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { ApiService } from './service/api.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './home/home.component';
@@ -24,6 +24,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import {NumberPickerModule} from 'ng-number-picker';
 import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
+import { HttpConfigInterceptor } from './httpconfig.interceptor';
 
 
 
@@ -42,7 +43,6 @@ import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
     ProfileComponent,
     LoadingSpinnerComponent,
     SnoozeOnComponent,
-   
   
   ],
   imports: [
@@ -60,7 +60,9 @@ import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
     UiSwitchModule,
     NumberPickerModule
   ],
-  providers: [ApiService],
+  providers: [ApiService,
+    {provide:HTTP_INTERCEPTORS, useClass:HttpConfigInterceptor, multi:true}
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
