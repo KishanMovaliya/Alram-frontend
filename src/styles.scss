@@ -12,24 +12,21 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-.imageback{
-    background-image: url("../src/assets/w-qjCHPZbeXCQ-unsplash.jpg");
-    // height: 800px; 
-    height: 200%; 
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-}
-
 body, html {
     height: 100%;
   }
   
   .bg {
     /* The image used */
-    background-image: url("../src/assets/3NIEQB3SFVCMNHH6MHZ42FO6PA.jpg");
+    background-image: url("../src/assets/Savin-NY-Website-Background-Web.jpg");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-repeat: no-repeat; /* Do not repeat the image */
   }
+
+
+  
+
+  

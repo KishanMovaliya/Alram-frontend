@@ -1,10 +1,10 @@
 <app-loading-spinner *ngIf=showSpinner></app-loading-spinner>
-<div class="container mainclass" *ngIf="getShedule?.length > 0;else emptyShedule" >
+<div class="container mainclass" *ngIf="getShedule?.length > 0;else emptyShedule">
   <div>
     <!-------------------------Update email shedule form ---------------------------------------->
     <form action="javascript:void(0)" [formGroup]="clockForm" (ngSubmit)="onSubmit()">
       <div class="form-group row" *ngFor="let shedule of getShedule; let i=index">
-        <!-- choose time -->
+        <!--------------------- choose time ----------------------------------------------------->
         <label for="alarmTime" class="">Choose time </label>
         <input class="form-control-plaintext" formControlName="time" placeholder="{{shedule.time | date: 'h:mm:ss a' }}"
           [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
@@ -37,7 +37,7 @@
 
         <!-- ----------------------------On Off Button------------------------------------->
         <div class="toogleclass">
-          <div> 
+          <div>
             <ui-switch [(ngModel)]="shedule.status" (valueChange)="onValueChange($event)" (click)="getid(shedule._id)"
               formControlName="status" uncheckedLabel="off" checkedLabel="on">
             </ui-switch>
@@ -47,14 +47,26 @@
         <button type="submit" class="btn btn-dark btn-block setclass">
           <i class="fa fa-plus-circle mr-1"></i> Set Shedule
         </button>
+
+        <!------------------------------- Add user --------------------------------------------->
+        <span class="deleteButtone">
+          <button type="button" (click)="opens(content)" class="btn btn-info">Add user</button>
+        </span>
+
         <!------------------------------ Delete Shdeule ----------------------------------------->
         <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
           <button type="button" class="btn btn-danger">Delete</button>
         </span>
+        <!------------------------------ Snooze badge --------------------------------------------->
+        <!-- <div class="badgeclass" *ngIf=getSheduleSnooze>
+          <div *ngFor="let itemget of getSheduleSnooze"> 
+            <button type="button" [routerLink]="['/snoozegetOn']" class="btn btn-warning">Snooze Left<span class="badge badge-light"  >{{itemget.limitsend}}</span></button>
+          </div>
+        </div> -->
       </div>
     </form>
 
-      <!-------------------------------- setnew shedule Form-------------------------------------------------->
+    <!-------------------------------- setnew shedule Form-------------------------------------------------->
     <hr>
     <div class="newaddform">
       <img class="plusicon" (click)="isCollapsedd = !isCollapsedd" [attr.aria-expanded]="!isCollapsedd"
@@ -63,7 +75,7 @@
     <div id="collapseExample" [ngbCollapse]="isCollapsedd">
       <div class="card">
         <form [formGroup]="clockForm" (ngSubmit)='onSubmits()'>
-        <div class="card-body">
+          <div class="card-body">
             <!----------------------Select Time ---------------------------------------------------------- -->
             <div class="form-group">
               <label for="exampleInputEmail1">Select Time</label>
@@ -114,12 +126,59 @@
             </div>
             <!----------------------Submit ---------------------------------------------------------- -->
             <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+
 </div>
+
+<!-----------------------user Model  --------------------------------->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="getuseremail">
+    <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
+      <div>
+        <div class="">
+          <div class="row" *ngFor="let usersdata of getuseremail; let i=index">
+            <div class="col-sm-6">
+              <div class="list list-row block">
+                <div class="list-item" data-id="19">
+                  <div><a href="#" data-abc="true"><span class="w-48 avatar gd-warning">{{usersdata.name}}</span></a>
+                  </div>
+                  <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{usersdata.name}}</a>
+                    <div class="item-except text-muted text-sm h-1x">{{usersdata.email}}</div>
+                  </div>
+                  <!-- <div class="no-wrap">
+                    <i class="fa fa-plus" aria-hidden="true" (click)="onclickplus(usersdata.email)"></i>
+                  </div> -->
+                  <div class='checkbox'>
+                    <div class="check">
+                      <label>
+                        <input type="checkbox" [value]="usersdata.email" (change)="onCheckboxChange($event)" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button> -->
+  </div>
+</ng-template>
 
 <ng-template #emptyShedule>
   <div *ngIf="!showSpinner">

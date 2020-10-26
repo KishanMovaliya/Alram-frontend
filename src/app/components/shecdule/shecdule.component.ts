@@ -21,6 +21,7 @@ export class ShecduleComponent implements OnInit {
   public status:Boolean
   collection = [];
   emailget:any
+  idget:any
  
 
   constructor(public fb: FormBuilder,public authService: AuthapiService,
@@ -34,6 +35,8 @@ export class ShecduleComponent implements OnInit {
       this.mainForm();
       this.currentUserEmail = JSON.parse(localStorage.getItem('user'))
       this.emailget = this.currentUserEmail.userCredentials.email
+      this.idget=this.currentUserEmail.userCredentials._id
+
   }
   data: Date;
  
@@ -71,6 +74,7 @@ export class ShecduleComponent implements OnInit {
     this.status=true
     this.sheduleForm.value.status=this.status
     this.sheduleForm.value.email=this.emailget
+    this.sheduleForm.value.userId= this.idget
     if(this.sheduleForm.valid){
       this.authService.createemailshedule(this.sheduleForm.value).subscribe(
         (data: any) => {

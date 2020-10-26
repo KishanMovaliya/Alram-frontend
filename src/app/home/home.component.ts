@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SnoozeService } from '../service/snooze.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormArray } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -31,10 +35,23 @@ export class HomeComponent implements OnInit {
   open = false
   indexvalue = null;
   public status: Boolean
-  valueChange = " ";
+  valueChange = "";
   collection = []
   mySubscription: any;
   showSpinner: boolean = true;
+
+  getstop = []
+  getSheduleSnooze: any = []
+  onSnoozelimit: any;
+  idgets = '';
+
+
+  getemailall: any = []
+  getuseremail: Array<any> = [
+
+  ];
+  useremail: any = []
+  closeResult = '';
 
   //-----------Option days----------------------------------------
   days = [
@@ -72,8 +89,13 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor(public authService: AuthapiService,
-    public formBuilder: FormBuilder, public router: Router,) {
+  Data: Array<any> = [
+
+  ];
+  form: FormGroup;
+
+  constructor(public authService: AuthapiService, public modalService: NgbModal, private fb: FormBuilder,
+    public formBuilder: FormBuilder, public router: Router, public Authservice: SnoozeService) {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.emailget = this.currentUser.userCredentials.email
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -86,9 +108,14 @@ export class HomeComponent implements OnInit {
         this.router.navigated = false;
       }
     });
+
+    //-----------for day list-----------------------------
     for (let i = 1; i <= 10; i++) {
       this.collection.push(`${i}`);
     }
+    this.form = this.fb.group({
+      checkArray: this.fb.array([],)
+    })
   }
   ngOnDestroy() {
     if (this.mySubscription) {
@@ -96,8 +123,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
   ngOnInit(): void {
     this.createalaramForm()
+
+    //--------------------get the Email shedule----------------------------
     this.authService.getemailshedules().subscribe((res: any) => {
       this.getemail = [res];
       this.getemail.map(ress => {
@@ -108,11 +138,16 @@ export class HomeComponent implements OnInit {
         this.showSpinner = false
 
       })
-    },
-      error => {
-        console.log(error)
-      }
+    }
     )
+
+    //-----------user data--------------------------------------------
+    this.authService.usergetall().subscribe((res: any) => {
+      this.getemailall = [res];
+      this.getemailall.map(ress => {
+        this.getuseremail = ress.data
+      })
+    })
   }
 
 
@@ -152,8 +187,6 @@ export class HomeComponent implements OnInit {
       this.authService.updateStatus(this.idget, this.clockForm.value)
         .subscribe(res => {
         })
-    } else {
-      console.log("error")
     }
   }
 
@@ -202,7 +235,6 @@ export class HomeComponent implements OnInit {
   }
 
   //-----------Submit form for new time add------------------------------------
-
   onSubmits() {
     this.submitted = true;
     this.clockForm.value.day = this.selection
@@ -232,47 +264,90 @@ export class HomeComponent implements OnInit {
 
   }
 
-  deleteshed(id){
-    this.idget=id
-    this.authService.deleteshedule(this.idget).subscribe((data)=>{
-      console.log("sucess")
+  //-----------------get id shedule-----------------------------------------
+  deleteshed(id) {
+    this.idget = id
+    this.authService.deleteshedule(this.idget).subscribe((data) => {
     })
   }
 
-//-------------delete shedule-----------------------------------------
-removeshedule(shedule, index) {
-  Swal.fire({
-    title: 'Are you sure want to Delete Employee?',
+  //-------------delete shedule-----------------------------------------
+  removeshedule(shedule, index) {
+    Swal.fire({
+      title: 'Are you sure want to Delete Employee?',
 
-    text: 'Delete The Employee !',
+      text: 'Delete The Employee !',
 
-    icon: 'warning',
+      icon: 'warning',
 
-    showCancelButton: true,
+      showCancelButton: true,
 
-    confirmButtonText: 'Yes, Delete it!',
+      confirmButtonText: 'Yes, Delete it!',
 
-    cancelButtonText: 'No, keep it'
+      cancelButtonText: 'No, keep it'
 
-  }).then((result) => {
-    if (result.value) {
-      this.authService.deleteshedule(shedule._id).subscribe((data) => {
-        this.getShedule.splice(index, 1);
-      })
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire(
+    }).then((result) => {
+      if (result.value) {
+        this.authService.deleteshedule(shedule._id).subscribe((data) => {
+          this.getShedule.splice(index, 1);
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
 
-        'Cancelled',
+          'Cancelled',
 
-        'welcomeback :)',
+          'welcomeback :)',
 
-        'error'
+          'error'
 
-      )
+        )
 
+      }
+
+    })
+  }
+
+
+  //----------------multi user select------------------------------------
+  onCheckboxChange(e) {
+    const checkArray: FormArray = this.form.get('checkArray') as FormArray;
+
+    if (e.target.checked) {
+      checkArray.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == e.target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
     }
+  }
 
-  })
-}
+  //-----------submit user add------------------------------------------
+  submitForm() {
+    this.authService.updateemailuser(this.idget, this.form.value).subscribe(res => {
+    })
+  }
 
+
+  opens(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

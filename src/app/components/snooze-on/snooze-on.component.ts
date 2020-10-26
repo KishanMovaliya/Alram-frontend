@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SnoozeService } from 'src/app/service/snooze.service';
 
+
 @Component({
   selector: 'app-snooze-on',
   templateUrl: './snooze-on.component.html',
@@ -30,11 +31,9 @@ export class SnoozeOnComponent implements OnInit {
         })
   
       })
-    },
-      error => {
-        console.log(error)
-      }
+    }
     )
+
   }
 
   //----------------Create Stop snooze Form----------------------------
@@ -57,9 +56,6 @@ export class SnoozeOnComponent implements OnInit {
       this.authService.updateSnooze(this.idget, this.snoozeonofform.value)
         .subscribe(res => {
         })
-        console.log(this.snoozeonofform.value)
-    } else {
-      console.log("error")
     }
   }
 
