@@ -13,16 +13,17 @@ import Swal from 'sweetalert2';
 export class NavbarComponent implements OnInit {
   currentUser: any
   username: ''
-  userName:''
+  userName: ''
   mySubscription: any;
-  notification:any
-  notific:any;
-  getnotified:any
-  time_get_create:any
-  messageget:any
-  fromuser:any
+  notification: any
+  notific: any;
+  getnotified: any
+  time_get_create: any
+  messageget: any
+  fromuser: any
+  getusername: any
 
-  constructor(public router: Router, public authService: AuthapiService,public Authservice: SnoozeService) {
+  constructor(public router: Router, public authService: AuthapiService, public Authservice: SnoozeService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -41,27 +42,32 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
-    this.userName=this.currentUser['userCredentials'].name || ''
-    if(this.userName){
-      this.username=this.userName
+    this.userName = this.currentUser['userCredentials'].name || ''
+    if (this.userName) {
+      this.username = this.userName
     }
 
-       this.Authservice.notificationget().subscribe((res: any) => {
-        this.notific = [res];
-        this.notific.map(ress => {
-          this.getnotified = ress.data
-          console.log(this.getnotified)
-          this.getnotified.map(a => {
-           this.time_get_create=a.createdAt
-           this.messageget=a.message
-           this.fromuser=a.from
-          })
+    //-----------notification get ------------------------------------------
+    this.Authservice.notificationget().subscribe((res: any) => {
+      this.notific = [res];
+      this.notific.map(ress => {
+        this.getnotified = ress.data
+        this.getnotified.map(a => {
+          this.time_get_create = a.createdAt
+          this.messageget = a.message
+          this.fromuser = a.from
         })
-      }
-      )
-    
+      })
+    }
+    )
+
+    //-----------get login user info-------------------------------------
+    this.authService.getuserlogin().subscribe((res: any) => {
+      this.getusername = res.name
+    })
+
   }
- 
+
   //-------------logout ---------------------------------------------------
   logout() {
     Swal.fire({

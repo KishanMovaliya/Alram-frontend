@@ -9,8 +9,8 @@ import { catchError, map } from 'rxjs/operators';
 export class AuthapiService {
 
   //--------------defiend base url-----------------------------------------
-  baseUri:string = 'http://localhost:4001/';
-  
+  baseUri: string = 'http://localhost:4001/';
+
   //--------------Defiend headers------------------------------------------
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -26,39 +26,49 @@ export class AuthapiService {
     return this.http.post(`${this.baseUri}user/login`, payload);
   }
 
+  //--------------------login user get----------------------------------------
+  getuserlogin() {
+    return this.http.get(`${this.baseUri}user/profile`)
+  }
+
+  //--------------------logout user get----------------------------------------
+  logoutuser() {
+    return this.http.get(`${this.baseUri}user/logout`)
+  }
+
   //--------------Create Email Shedule Api----------------------------------------
-  createemailshedule(payload){
+  createemailshedule(payload) {
     return this.http.post(`${this.baseUri}user/sheduleemail`, payload)
   }
 
-  getemailshedules(){
+  getemailshedules() {
     return this.http.get(`${this.baseUri}user/getemailshedule`)
   }
 
 
-  updateshedule(id,data){
-    let url=`${this.baseUri}user/updateShedule/${id}`
+  updateshedule(id, data) {
+    let url = `${this.baseUri}user/updateShedule/${id}`
     return this.http.put(url, data, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     )
   }
 
-  updateStatus(id,data){
-    let url=`${this.baseUri}user/status/${id}`
+  updateStatus(id, data) {
+    let url = `${this.baseUri}user/status/${id}`
     return this.http.put(url, data, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     )
   }
 
-deleteshedule(id){
-  let url = `${this.baseUri}user/deletshedule/${id}`;
-  return this.http.delete(url, { headers: this.headers }).pipe(
-    catchError(this.errorMgmt)
-  )
-}
+  deleteshedule(id) {
+    let url = `${this.baseUri}user/deletshedule/${id}`;
+    return this.http.delete(url, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
 
-   //---------------Error handling--------------------------------
-   errorMgmt(error: HttpErrorResponse) {
+  //---------------Error handling--------------------------------
+  errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
@@ -69,8 +79,17 @@ deleteshedule(id){
     }
     return throwError(errorMessage);
   }
-  
-  
 
-  
+  usergetall() {
+    return this.http.get(`${this.baseUri}user/getusers`)
+  }
+
+  updateemailuser(id, data) {
+    let url = `${this.baseUri}user/adduser/${id}`
+    return this.http.put(url, data, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
+
+
 }

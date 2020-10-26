@@ -5,27 +5,27 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SnoozeService {
- //--------------defiend base url-----------------------------------------
- baseUri:string = 'http://localhost:4001/';
-  
- //--------------Defiend headers------------------------------------------
- headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //--------------defiend base url-----------------------------------------
+  baseUri: string = 'http://localhost:4001/';
+
+  //--------------Defiend headers------------------------------------------
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) { }
 
-//--------------Get snooze details----------------------------------------
-  getsnoozeshedules(){
+  //--------------Get snooze details----------------------------------------
+  getsnoozeshedules() {
     return this.http.get(`${this.baseUri}user/getsnooze`)
   }
 
   //--------------Update Snooze Status------------------------------------
-  updateSnooze(id,data){
-    let url=`${this.baseUri}user/snoozeupdate/${id}`
+  updateSnooze(id, data) {
+    let url = `${this.baseUri}user/snoozeupdate/${id}`
     return this.http.put(url, data, { headers: this.headers }).pipe(
     )
   }
   //get notification
-  notificationget(){
-     return this.http.get(`${this.baseUri}user/getnotification`)
+  notificationget() {
+    return this.http.get(`${this.baseUri}user/getnotification`)
   }
 }
 

@@ -47,6 +47,12 @@
         <button type="submit" class="btn btn-dark btn-block setclass">
           <i class="fa fa-plus-circle mr-1"></i> Set Shedule
         </button>
+
+        <!------------------------------- Add user --------------------------------------------->
+        <span class="deleteButtone">
+          <button type="button" (click)="opens(content)" class="btn btn-info">Add user</button>
+        </span>
+
         <!------------------------------ Delete Shdeule ----------------------------------------->
         <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
           <button type="button" class="btn btn-danger">Delete</button>
@@ -125,7 +131,54 @@
       </div>
     </div>
   </div>
+
 </div>
+
+<!-----------------------user Model  --------------------------------->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="getuseremail">
+    <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
+      <div>
+        <div class="">
+          <div class="row" *ngFor="let usersdata of getuseremail; let i=index">
+            <div class="col-sm-6">
+              <div class="list list-row block">
+                <div class="list-item" data-id="19">
+                  <div><a href="#" data-abc="true"><span class="w-48 avatar gd-warning">{{usersdata.name}}</span></a>
+                  </div>
+                  <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{usersdata.name}}</a>
+                    <div class="item-except text-muted text-sm h-1x">{{usersdata.email}}</div>
+                  </div>
+                  <!-- <div class="no-wrap">
+                    <i class="fa fa-plus" aria-hidden="true" (click)="onclickplus(usersdata.email)"></i>
+                  </div> -->
+                  <div class='checkbox'>
+                    <div class="check">
+                      <label>
+                        <input type="checkbox" [value]="usersdata.email" (change)="onCheckboxChange($event)" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button> -->
+  </div>
+</ng-template>
 
 <ng-template #emptyShedule>
   <div *ngIf="!showSpinner">
