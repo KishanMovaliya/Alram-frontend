@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MessagingService } from './service/messaging.service';
 
 
 @Component({
@@ -8,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angularNode';
+  message;
+
+  constructor(public messagingService: MessagingService) { }
+  ngOnInit() {
+    this.messagingService.requestPermission()
+    this.messagingService.receiveMessage()
+    this.message = this.messagingService.currentMessage
+   }
 }

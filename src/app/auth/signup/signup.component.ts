@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
@@ -16,7 +16,6 @@ export class SignupComponent implements OnInit {
   userForm: FormGroup;
   constructor(public fb: FormBuilder,
     private router: Router,
-    private ngZone: NgZone,
     private apiService: AuthapiService) {
    
      }

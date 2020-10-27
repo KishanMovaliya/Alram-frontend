@@ -42,10 +42,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
-    this.userName = this.currentUser['userCredentials'].name || ''
-    if (this.userName) {
-      this.username = this.userName
-    }
 
     //-----------notification get ------------------------------------------
     this.Authservice.notificationget().subscribe((res: any) => {

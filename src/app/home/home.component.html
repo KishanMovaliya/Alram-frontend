@@ -43,10 +43,6 @@
             </ui-switch>
           </div>
         </div>
-        <!------------------------------update shedule--------------------------------------- -->
-        <button type="submit" class="btn btn-dark btn-block setclass">
-          <i class="fa fa-plus-circle mr-1"></i> Set Shedule
-        </button>
 
         <!------------------------------- Add user --------------------------------------------->
         <span class="deleteButtone">
@@ -57,6 +53,11 @@
         <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
           <button type="button" class="btn btn-danger">Delete</button>
         </span>
+
+         <!------------------------------update shedule--------------------------------------- -->
+         <button type="submit" style="margin: 0 0 0 40px;" class="btn btn-dark btn-block setclass">
+          Set Shedule <i class="fa fa-plus-circle mr-1"></i>
+        </button>
         <!------------------------------ Snooze badge --------------------------------------------->
         <!-- <div class="badgeclass" *ngIf=getSheduleSnooze>
           <div *ngFor="let itemget of getSheduleSnooze"> 
@@ -73,9 +74,9 @@
         aria-controls="collapseExample" src="../../assets/plus-symbol-in-a-rounded-black-square.png">
     </div>
     <div id="collapseExample" [ngbCollapse]="isCollapsedd">
-      <div class="card">
+      <div class="card ">
         <form [formGroup]="clockForm" (ngSubmit)='onSubmits()'>
-          <div class="card-body">
+          <div class="card-body ">
             <!----------------------Select Time ---------------------------------------------------------- -->
             <div class="form-group">
               <label for="exampleInputEmail1">Select Time</label>

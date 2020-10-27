@@ -36,7 +36,7 @@ export class ShecduleComponent implements OnInit {
       this.currentUserEmail = JSON.parse(localStorage.getItem('user'))
       this.emailget = this.currentUserEmail.userCredentials.email
       this.idget=this.currentUserEmail.userCredentials._id
-
+ 
   }
   data: Date;
  

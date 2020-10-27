@@ -47,11 +47,10 @@ export class HomeComponent implements OnInit {
 
 
   getemailall: any = []
-  getuseremail: Array<any> = [
-
-  ];
+  getuseremail: Array<any> = [];
   useremail: any = []
   closeResult = '';
+  useridget:any
 
   //-----------Option days----------------------------------------
   days = [
@@ -98,6 +97,7 @@ export class HomeComponent implements OnInit {
     public formBuilder: FormBuilder, public router: Router, public Authservice: SnoozeService) {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.emailget = this.currentUser.userCredentials.email
+    this.useridget=this.currentUser.userCredentials._id
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -241,7 +241,7 @@ export class HomeComponent implements OnInit {
     this.clockForm.value.email = this.emailget
     this.status = true
     this.clockForm.value.status = this.status
-
+    this.clockForm.value.userId=this.useridget
     if (this.clockForm.valid) {
       this.authService.createemailshedule(this.clockForm.value).subscribe(
         (data: any) => {
@@ -329,6 +329,7 @@ export class HomeComponent implements OnInit {
   //-----------submit user add------------------------------------------
   submitForm() {
     this.authService.updateemailuser(this.idget, this.form.value).subscribe(res => {
+      this.modalService.dismissAll();
     })
   }
 

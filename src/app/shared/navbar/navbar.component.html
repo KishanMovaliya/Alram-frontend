@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
-    <a class="navbar-brand" style="margin-top: -4px;" href="#">AngularNode</a>
+    <a class="navbar-brand" style="margin-top: -4px;" routerLink="/">AngularNode</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -13,17 +13,6 @@
           <a class="nav-link " routerLinkActive="active" routerLink="/">Home <span class="sr-only">(current)</span></a>
         </li>
 
-        <!--------------------------------View Employees Link-------------------------------------------------------------- -->
-        <!-- <li class="nav-item ">
-        <a class="nav-link" *ngIf=currentUser routerLinkActive="active" routerLink="/employees-list">View Employees</a>
-      </li> -->
-
-
-        <!--------------------------------Add Employee Link-------------------------------------------------------------- -->
-        <!-- <li class="nav-item ">
-        <a class="nav-link" *ngIf=currentUser routerLinkActive="active" routerLink="/create-employee">Add Employee</a>
-      </li> -->
-
 
         <!--------------------------------Login Link-------------------------------------------------------------- -->
         <li class="nav-item">
@@ -35,16 +24,16 @@
           <a class="nav-link" routerLinkActive="active" *ngIf=!getusername routerLink="/registration">Signup</a>
         </li>
 
-        <!--------------------------------currentUser show-------------------------------------------------------------- -->
-        <li class="nav-item">
-          <a class="nav-link" *ngIf=getusername [routerLink]="['/profileget']"
-            routerLinkActive="active">{{this.getusername}}</a>
-        </li>
-
         <!--------------------------------profile user show-------------------------------------------------------------- -->
         <li class="nav-item">
           <a class="nav-link" *ngIf=currentUser [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
             Shedule</a>
+        </li>
+
+        <!--------------------------------currentUser show-------------------------------------------------------------- -->
+        <li class="nav-item">
+          <a class="nav-link" *ngIf=getusername [routerLink]="['/profileget']"
+            routerLinkActive="active">{{this.getusername}}</a>
         </li>
 
 
@@ -55,7 +44,7 @@
         </li>
 
         <!--------------------------------Notifications bell------------------------------------------------------  -->
-        <li class="nav-item" *ngIf="getnotified?.length > 0">
+        <!-- <li class="nav-item" *ngIf="getnotified?.length > 0">
           <nav class="navbar navbar-expand-lg ">
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: unset !important;">
               <ul class="nav nav-pills mr-auto justify-content-end">
@@ -101,7 +90,7 @@
               </ul>
             </div>
           </nav>
-        </li>
+        </li> -->
         <!-- end notifications -->
       </ul>
     </div>
