@@ -2,48 +2,66 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/messaging';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { AuthapiService } from './authapi.service';
+import { SnoozeService } from './snooze.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagingService {
   currentMessage = new BehaviorSubject(null);
-  currentUserEmail:any
-  emailget:any
-  idget:any
+  currentUserEmail: any
+  emailget: any
+  idget: any
+  tokenget: any
+  getusername: any
+  token: any
+  getdata: any = []
+  gettokenstatus: any
+  tokenvalue: any
+  constructor(public angularFireMessaging: AngularFireMessaging, public http: HttpClient,
+    public snoozeservice: SnoozeService, public authService: AuthapiService) {
   
-  baseUri: string = 'http://localhost:4001/';
-  constructor(public angularFireMessaging: AngularFireMessaging,public http: HttpClient) { 
-    // this.angularFireMessaging.messaging.map(
-    //   (_messaging) => {
-    //   _messaging.onMessage = _messaging.onMessage.bind(_messaging);
-    //   _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
-    //   }
-    //   )
+    this.currentUserEmail = JSON.parse(localStorage.getItem('user')) || "not lOgin"
+    this.emailget = this.currentUserEmail.userCredentials.email || "Not login"
+    this.idget = this.currentUserEmail.userCredentials._id  || "Not login"
+    // this.snoozeservice.getnotificationtoken().subscribe((res: any)=>{
+    //   this.token=[res]
+    //   this.getdata=this.token
+    //   this.getdata.map(res=>{
+    //     this.gettokenstatus=res.data
+    //     this.gettokenstatus.map(res=>{
+    //       this.tokenvalue=res.notificationToken
+    //       console.log(this.tokenvalue)
+    //     })
+    //     console.log("resss", this.gettokenstatus)
+    //   })
+    // })
   }
-  ngOnInit(){
-    this.currentUserEmail = JSON.parse(localStorage.getItem('user'))
-    this.emailget = this.currentUserEmail.userCredentials.email
-    this.idget=this.currentUserEmail.userCredentials._id
+  ngOnInit() {
   }
   requestPermission() {
     this.angularFireMessaging.requestToken.subscribe(
-    (token) => {
-    console.log("token",token);
-    if(token){
-      this.http.post(`${this.baseUri}user/addtoken`,token) 
-    }
-    },  
-    (err) => {
-    console.error('Unable to get permission to notify.', err);
-    }
+      (token) => {
+        if (token) {
+          let data = {
+            userId: this.idget,
+            email: this.emailget,
+            notificationToken: token
+          }
+          this.snoozeservice.addtoken(data).subscribe(res => { })
+        }
+      },
+      (err) => {
+        console.error('Unable to get permission to notify.', err);
+      }
     );
-    }
-    receiveMessage() {
+  }
+  receiveMessage() {
     this.angularFireMessaging.messages.subscribe(
-    (payload) => {
-    console.log("new message received. ", payload);
-    this.currentMessage.next(payload);
-    })
-    }
+      (payload) => {
+        console.log("new message received. ", payload);
+        this.currentMessage.next(payload);
+      })
+  }
 }

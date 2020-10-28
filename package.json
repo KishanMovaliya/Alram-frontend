@@ -26,6 +26,7 @@
     "@angular/pwa": "^0.6.8",
     "@angular/router": "~9.1.11",
     "@angular/service-worker": "^10.2.0",
+    "@firebase/firestore": "^2.0.0",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "@nth-cloud/ng-toggle": "^6.0.0",
     "@syncfusion/ej2-angular-calendars": "^18.3.35",
