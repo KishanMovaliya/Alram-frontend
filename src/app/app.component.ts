@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MessagingService } from './service/messaging.service';
+import { AuthapiService } from './service/authapi.service';
 
 
 @Component({
@@ -7,14 +7,24 @@ import { MessagingService } from './service/messaging.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'angularNode';
-  message;
 
-  constructor(public messagingService: MessagingService) { }
+
+  constructor(public authService: AuthapiService) { }
   ngOnInit() {
-    this.messagingService.requestPermission()
-    this.messagingService.receiveMessage()
-    this.message = this.messagingService.currentMessage
-   }
+    window.addEventListener("beforeunload",  (e)=> {
+      this.authService.updateUserStatus();
+      const options = {
+        method: "GET",
+        headers: new Headers({'Authorization': `Token ${localStorage.getItem('Token')}`}),
+    };
+      fetch('http://localhost:4001/user/updateuserStatus/1', options)
+    });
+
+    setTimeout(() => {
+      this.authService.updateUserStatus().subscribe(res=>{
+      });
+    }, 4000);
+  }
 }

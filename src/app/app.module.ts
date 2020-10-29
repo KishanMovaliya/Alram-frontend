@@ -23,13 +23,8 @@ import {NumberPickerModule} from 'ng-number-picker';
 import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
 import { HttpConfigInterceptor } from './httpconfig.interceptor';
 import { SnoozeService } from './service/snooze.service';
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
-import { MessagingService } from './service/messaging.service';
-import { environment } from '../environments/environment';
-import { AsyncPipe } from '../../node_modules/@angular/common';
+
+
 
 
 
@@ -65,12 +60,8 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
     NgToggleModule,  
     UiSwitchModule,
     NumberPickerModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireMessagingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
-  providers: [AuthapiService,SnoozeService,MessagingService,AsyncPipe,
+  providers: [AuthapiService,SnoozeService,
     {provide:HTTP_INTERCEPTORS, useClass:HttpConfigInterceptor, multi:true}
    ],
   bootstrap: [AppComponent]

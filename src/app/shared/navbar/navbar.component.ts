@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit {
     };
     this.mySubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // Trick the Router into believing it's last link wasn't previously loaded
         this.router.navigated = false;
       }
     });
@@ -41,22 +40,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = JSON.parse(localStorage.getItem('user'))
-
-    //-----------notification get ------------------------------------------
-    this.Authservice.notificationget().subscribe((res: any) => {
-      this.notific = [res];
-      this.notific.map(ress => {
-        this.getnotified = ress.data
-        this.getnotified.map(a => {
-          this.time_get_create = a.createdAt
-          this.messageget = a.message
-          this.fromuser = a.from
-        })
-      })
-    }
-    )
-
     //-----------get login user info-------------------------------------
     this.authService.getuserlogin().subscribe((res: any) => {
       this.getusername = res.name
@@ -75,11 +58,17 @@ export class NavbarComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
+
+        this.authService.logoutuser().subscribe((res: any) => {
+         
         localStorage.removeItem('Token');
         localStorage.removeItem('currentUserLogin')
         localStorage.removeItem('user')
         this.router.navigate(['/login'])
         this.ngOnInit();
+
+        })
+
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
