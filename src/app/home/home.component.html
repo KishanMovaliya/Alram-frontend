@@ -43,12 +43,8 @@
             </ui-switch>
           </div>
         </div>
-        <!------------------------------update shedule--------------------------------------- -->
-        <button type="submit" class="btn btn-dark btn-block setclass">
-          <i class="fa fa-plus-circle mr-1"></i> Set Shedule
-        </button>
 
-        <!------------------------------- Add user --------------------------------------------->
+        <!------------------------------- Add user Buttone --------------------------------------------->
         <span class="deleteButtone">
           <button type="button" (click)="opens(content)" class="btn btn-info">Add user</button>
         </span>
@@ -57,12 +53,11 @@
         <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
           <button type="button" class="btn btn-danger">Delete</button>
         </span>
-        <!------------------------------ Snooze badge --------------------------------------------->
-        <!-- <div class="badgeclass" *ngIf=getSheduleSnooze>
-          <div *ngFor="let itemget of getSheduleSnooze"> 
-            <button type="button" [routerLink]="['/snoozegetOn']" class="btn btn-warning">Snooze Left<span class="badge badge-light"  >{{itemget.limitsend}}</span></button>
-          </div>
-        </div> -->
+
+         <!------------------------------update shedule--------------------------------------- -->
+         <button type="submit" style="margin: 0 0 0 40px;" class="btn btn-dark btn-block setclass">
+          Set Shedule <i class="fa fa-plus-circle mr-1"></i>
+        </button>
       </div>
     </form>
 
@@ -73,9 +68,9 @@
         aria-controls="collapseExample" src="../../assets/plus-symbol-in-a-rounded-black-square.png">
     </div>
     <div id="collapseExample" [ngbCollapse]="isCollapsedd">
-      <div class="card">
+      <div class="card ">
         <form [formGroup]="clockForm" (ngSubmit)='onSubmits()'>
-          <div class="card-body">
+          <div class="card-body ">
             <!----------------------Select Time ---------------------------------------------------------- -->
             <div class="form-group">
               <label for="exampleInputEmail1">Select Time</label>
@@ -93,7 +88,7 @@
                 <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
               </label>
             </div>
-            <!----------------------------------Choose Step dAys ------------------------------------------------>
+            <!----------------------------------Choose Step days ------------------------------------------------>
             <div class="form-group">
               <select class="custom-select" (change)="changedays($event)" formControlName="stepday">
                 <option value="">Choose your Days Step</option>
@@ -134,7 +129,7 @@
 
 </div>
 
-<!-----------------------user Model  --------------------------------->
+<!-----------------------user Model  popup --------------------------------->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add User</h4>
@@ -155,13 +150,10 @@
                   <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{usersdata.name}}</a>
                     <div class="item-except text-muted text-sm h-1x">{{usersdata.email}}</div>
                   </div>
-                  <!-- <div class="no-wrap">
-                    <i class="fa fa-plus" aria-hidden="true" (click)="onclickplus(usersdata.email)"></i>
-                  </div> -->
                   <div class='checkbox'>
                     <div class="check">
                       <label>
-                        <input type="checkbox" [value]="usersdata.email" (change)="onCheckboxChange($event)" />
+                        <input type="checkbox" [value]="usersdata._id" (change)="onCheckboxChange($event)" />
                       </label>
                     </div>
                   </div>
@@ -182,6 +174,6 @@
 
 <ng-template #emptyShedule>
   <div *ngIf="!showSpinner">
-    <h1 class="emptyShedule">No Shedule Found</h1>
+    <img class="emptyShedule" src="../../assets/data.png" />
   </div>
 </ng-template>

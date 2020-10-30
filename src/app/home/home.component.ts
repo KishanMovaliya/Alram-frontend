@@ -47,11 +47,10 @@ export class HomeComponent implements OnInit {
 
 
   getemailall: any = []
-  getuseremail: Array<any> = [
-
-  ];
+  getuseremail: Array<any> = [];
   useremail: any = []
   closeResult = '';
+  useridget:any
 
   //-----------Option days----------------------------------------
   days = [
@@ -97,7 +96,8 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthapiService, public modalService: NgbModal, private fb: FormBuilder,
     public formBuilder: FormBuilder, public router: Router, public Authservice: SnoozeService) {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
-    this.emailget = this.currentUser.userCredentials.email
+    this.emailget = this.currentUser?.userCredentials?.email
+    this.useridget=this.currentUser?.userCredentials?._id
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -241,7 +241,7 @@ export class HomeComponent implements OnInit {
     this.clockForm.value.email = this.emailget
     this.status = true
     this.clockForm.value.status = this.status
-
+    this.clockForm.value.userId=this.useridget
     if (this.clockForm.valid) {
       this.authService.createemailshedule(this.clockForm.value).subscribe(
         (data: any) => {
@@ -311,7 +311,6 @@ export class HomeComponent implements OnInit {
   //----------------multi user select------------------------------------
   onCheckboxChange(e) {
     const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-
     if (e.target.checked) {
       checkArray.push(new FormControl(e.target.value));
     } else {
@@ -329,10 +328,11 @@ export class HomeComponent implements OnInit {
   //-----------submit user add------------------------------------------
   submitForm() {
     this.authService.updateemailuser(this.idget, this.form.value).subscribe(res => {
+      this.modalService.dismissAll();
     })
   }
 
-
+//-----------open popup-----------------------------------------------
   opens(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -341,6 +341,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  //-----------popup close--------------------------------------------
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

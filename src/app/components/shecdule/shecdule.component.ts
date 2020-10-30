@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
 import Swal from 'sweetalert2';
@@ -36,7 +36,7 @@ export class ShecduleComponent implements OnInit {
       this.currentUserEmail = JSON.parse(localStorage.getItem('user'))
       this.emailget = this.currentUserEmail.userCredentials.email
       this.idget=this.currentUserEmail.userCredentials._id
-
+ 
   }
   data: Date;
  

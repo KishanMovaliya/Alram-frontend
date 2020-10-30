@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,11 +41,12 @@ export class AuthapiService {
     return this.http.post(`${this.baseUri}user/sheduleemail`, payload)
   }
 
+  //--------------------getemail shedule------------------------------------------
   getemailshedules() {
     return this.http.get(`${this.baseUri}user/getemailshedule`)
   }
 
-
+  //--------------Update Shdeule-------------------------------------------
   updateshedule(id, data) {
     let url = `${this.baseUri}user/updateShedule/${id}`
     return this.http.put(url, data, { headers: this.headers }).pipe(
@@ -53,6 +54,7 @@ export class AuthapiService {
     )
   }
 
+  //--------------Update Status-------------------------------------------
   updateStatus(id, data) {
     let url = `${this.baseUri}user/status/${id}`
     return this.http.put(url, data, { headers: this.headers }).pipe(
@@ -60,11 +62,30 @@ export class AuthapiService {
     )
   }
 
+  //--------------delete shdedule-----------------------------------------
   deleteshedule(id) {
     let url = `${this.baseUri}user/deletshedule/${id}`;
     return this.http.delete(url, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     )
+  }
+
+  //--------------get all users-------------------------------------------
+  usergetall() {
+    return this.http.get(`${this.baseUri}user/getusers`)
+  }
+
+  //--------------Update email user----------------------------------------
+  updateemailuser(id, data) {
+    let url = `${this.baseUri}user/adduser/${id}`
+    return this.http.put(url, data, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
+
+  //--------------user status------------------------------------------------
+  updateUserStatus() {
+    return this.http.get(`${this.baseUri}user/updateuserStatus/2`)
   }
 
   //---------------Error handling--------------------------------
@@ -79,17 +100,5 @@ export class AuthapiService {
     }
     return throwError(errorMessage);
   }
-
-  usergetall() {
-    return this.http.get(`${this.baseUri}user/getusers`)
-  }
-
-  updateemailuser(id, data) {
-    let url = `${this.baseUri}user/adduser/${id}`
-    return this.http.put(url, data, { headers: this.headers }).pipe(
-      catchError(this.errorMgmt)
-    )
-  }
-
 
 }

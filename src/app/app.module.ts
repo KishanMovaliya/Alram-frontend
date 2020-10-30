@@ -1,13 +1,10 @@
+import { AuthapiService } from 'src/app/service/authapi.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { EmployeeCreateComponent } from './components/employee-create/employee-create.component';
-import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
-import { EmployeeListComponent } from './components/employee-list/employee-list.component';
-import { ApiService } from './service/api.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
@@ -25,6 +22,9 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import {NumberPickerModule} from 'ng-number-picker';
 import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
 import { HttpConfigInterceptor } from './httpconfig.interceptor';
+import { SnoozeService } from './service/snooze.service';
+import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
+
 
 
 
@@ -33,9 +33,6 @@ import { HttpConfigInterceptor } from './httpconfig.interceptor';
   declarations: [
     AppComponent,
     NavbarComponent,
-    EmployeeCreateComponent,
-    EmployeeEditComponent,
-    EmployeeListComponent,
     LoginComponent,
     SignupComponent,
     HomeComponent,
@@ -43,6 +40,7 @@ import { HttpConfigInterceptor } from './httpconfig.interceptor';
     ProfileComponent,
     LoadingSpinnerComponent,
     SnoozeOnComponent,
+    NoPageFoundComponent,
   
   ],
   imports: [
@@ -58,9 +56,9 @@ import { HttpConfigInterceptor } from './httpconfig.interceptor';
     FormsModule,
     NgToggleModule,  
     UiSwitchModule,
-    NumberPickerModule
+    NumberPickerModule,
   ],
-  providers: [ApiService,
+  providers: [AuthapiService,SnoozeService,
     {provide:HTTP_INTERCEPTORS, useClass:HttpConfigInterceptor, multi:true}
    ],
   bootstrap: [AppComponent]

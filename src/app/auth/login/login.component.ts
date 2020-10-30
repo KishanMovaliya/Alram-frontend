@@ -17,16 +17,17 @@ export class LoginComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
-
+    
     this.mySubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Trick the Router into believing it's last link wasn't previously loaded
         this.router.navigated = false;
       }
     });
-   }
+  }
   
   ngOnInit(): void {
+    
   }
 
   ngOnDestroy() {
@@ -48,8 +49,7 @@ export class LoginComponent implements OnInit {
         let token = data.token;
         localStorage.setItem('Token', token);
         localStorage.setItem("user", JSON.stringify(data))
-        await this.router.navigate(['/home'])
-        this.ngOnInit();
+        await this.router.navigate(['/'])
         Swal.fire("login Success!", "You login Successfully", "success")
       },
       (err: HttpErrorResponse) => {
