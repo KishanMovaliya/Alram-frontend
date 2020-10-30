@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { ProfileComponent } from './auth/profile/profile.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 import { ShecduleComponent } from './components/shecdule/shecdule.component';
 import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
 import { AuthGuard } from './guard/auth.guard';
@@ -30,7 +31,10 @@ const routes: Routes = [
   { path: 'profileget', component: ProfileComponent },
 
   //--------------------snoozeOn-------------------------------------------------------------
-  { path: 'snoozegetOn', component: SnoozeOnComponent }
+  { path: 'snoozegetOn', component: SnoozeOnComponent },
+
+  //--------------------page not found--------------------------------------------------------- --
+  { path: '**', component: NoPageFoundComponent }
 
 ];
 

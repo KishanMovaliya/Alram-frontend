@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthapiService } from './service/authapi.service';
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

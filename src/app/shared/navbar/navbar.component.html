@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
-    <a class="navbar-brand" style="margin-top: -4px;" routerLink="/">AngularNode</a>
+    <a class="navbar-brand" style="margin-top: -14px;" routerLink="/">AngularNode</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
 
         <!--------------------------------profile user show-------------------------------------------------------------- -->
         <li class="nav-item">
-          <a class="nav-link" *ngIf=currentUser [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
+          <a class="nav-link" *ngIf=getusername [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
             Shedule</a>
         </li>
 
@@ -42,6 +42,52 @@
           <a class="nav-link" style="cursor: pointer;" *ngIf=getusername routerLinkActive="active"
             (click)="logout()">Logout</a>
         </li>
+
+        <!--------------------------------Notifications bell------------------------------------------------------  -->
+        <li class="nav-item" *ngIf="getnotified?.length > 0 ">
+          <nav class="navbar navbar-expand-lg ">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: unset !important;">
+              <ul class="nav nav-pills mr-auto justify-content-end">
+                <li class="nav-item dropdown">
+                  <a class="nav-link text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img class="noti" style="width: 33px"
+                      src="../../../assets/iconfinder_bell-notification-notify-reminder-ring_3643784.png" /><span
+                      style="color: black;">{{getunreadLength?.length }}</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="head text-light bg-dark">
+                      <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12">
+                          <span>Notifications ({{getunreadLength?.length}})</span>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="notification-box" *ngFor="let item of getnotified; let i=index">
+                      <div class="row" [ngStyle]="{'background-color': item.statusRead == true ? '#10e62a' : '#e43c3c'}"
+                        (click)="onclickstatus(item._id)">
+                        <div class="col-lg-3 col-sm-3 col-3 text-center">
+                          <img src="../../../assets/user.png" style="width: 100% !important;" class="w-50 rounded-circle">
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8">
+                          <strong class="text-info">{{item.from}}</strong>
+                          <div style="color:#060606">
+                            {{item.message}}
+                          </div>
+                          <small style="color:#060606 !important"
+                            class="text-warning">{{item.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</small>
+                        </div>
+                      </div>
+
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </li>
+
       </ul>
     </div>
 

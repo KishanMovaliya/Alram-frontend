@@ -23,11 +23,7 @@ import {NumberPickerModule} from 'ng-number-picker';
 import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
 import { HttpConfigInterceptor } from './httpconfig.interceptor';
 import { SnoozeService } from './service/snooze.service';
-
-
-
-
-
+import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 
 
 
@@ -44,6 +40,7 @@ import { SnoozeService } from './service/snooze.service';
     ProfileComponent,
     LoadingSpinnerComponent,
     SnoozeOnComponent,
+    NoPageFoundComponent,
   
   ],
   imports: [

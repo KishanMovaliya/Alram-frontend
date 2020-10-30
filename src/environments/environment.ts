@@ -5,16 +5,6 @@
 export const environment = {
   production: false,
   SOCKET_ENDPOINT: 'http://localhost:4001',
-  firebaseConfig : {
-    apiKey: "AIzaSyC0nxrkH5v1rZgXXmkJZ3JvcOn_BRxHGmE",
-    authDomain: "emailshdeule.firebaseapp.com",
-    databaseURL: "https://emailshdeule.firebaseio.com",
-    projectId: "emailshdeule",
-    storageBucket: "emailshdeule.appspot.com",
-    messagingSenderId: "126149942558",
-    appId: "1:126149942558:web:c2f436b84adea0bc78bd0f"
-  }
-  
 };
 
 /*
