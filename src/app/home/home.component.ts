@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  
   submitted = false
   currentUser: any;
   emailget: any

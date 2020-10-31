@@ -1,3 +1,4 @@
+import { RxjsdataService } from './service/rxjsdata.service';
 import { AuthapiService } from 'src/app/service/authapi.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -58,7 +59,7 @@ import { NoPageFoundComponent } from './components/no-page-found/no-page-found.c
     UiSwitchModule,
     NumberPickerModule,
   ],
-  providers: [AuthapiService,SnoozeService,
+  providers: [AuthapiService,SnoozeService,RxjsdataService,
     {provide:HTTP_INTERCEPTORS, useClass:HttpConfigInterceptor, multi:true}
    ],
   bootstrap: [AppComponent]

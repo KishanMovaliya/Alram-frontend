@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
+import { RxjsdataService } from 'src/app/service/rxjsdata.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   username: any
   mySubscription: any;
-  constructor(public apiService: AuthapiService, public router: Router) {
+  constructor(public apiService: AuthapiService, public router: Router, private rxjsDataService:RxjsdataService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -45,11 +46,12 @@ export class LoginComponent implements OnInit {
   //----------------------Calling login Function---------------------------
   loginUser() {
     this.apiService.userLogin(this.loginForm.value).subscribe(
-      async (data: any) => {
+       (data: any) => {
         let token = data.token;
         localStorage.setItem('Token', token);
         localStorage.setItem("user", JSON.stringify(data))
-        await this.router.navigate(['/'])
+        this.rxjsDataService.updateLoginStatus(true);
+        this.router.navigate(['/home'])
         Swal.fire("login Success!", "You login Successfully", "success")
       },
       (err: HttpErrorResponse) => {
