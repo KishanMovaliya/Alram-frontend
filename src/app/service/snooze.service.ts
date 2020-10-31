@@ -45,12 +45,6 @@ export class SnoozeService {
    }
 
 
-
-   getGames(): Observable<INotification[]> {
-    return this.http.get<INotification[]>(`${this.baseUri}user/getunreadstatus`).pipe(
-        tap(data => console.log('All: ' + JSON.stringify(data))),
-    );
-}
 }
 
 
