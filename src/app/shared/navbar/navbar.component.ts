@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthapiService } from 'src/app/service/authapi.service';
+import { RxjsdataService } from 'src/app/service/rxjsdata.service';
 import { SnoozeService } from 'src/app/service/snooze.service';
 import Swal from 'sweetalert2';
 
@@ -16,7 +17,9 @@ export class NavbarComponent implements OnInit {
   username: ''
   userName: ''
   mySubscription: any;
+  unreadMessageCount: number = 0;
   notification: any
+  isLogin: boolean = false;
   notific: any;
   getnotified: any
   time_get_create: any
@@ -30,9 +33,21 @@ export class NavbarComponent implements OnInit {
   getunreadnotification: any
   getunreadLength: any
   countlength = new BehaviorSubject(0);
-  
+
   constructor(public router: Router, public authService: AuthapiService,
-    public snoozeService: SnoozeService) {
+    public snoozeService: SnoozeService, public rxjsDataService: RxjsdataService) {
+    
+      this.rxjsDataService.isLoginSerivce.subscribe((isLogin) => {
+      if (!isLogin) {
+        if (localStorage.getItem('Token')) {
+          this.rxjsDataService.updateLoginStatus(true)
+        }else{
+          this.isLogin  = isLogin;
+        }
+      } else {
+        this.isLogin = isLogin;
+      }
+    });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -53,11 +68,13 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     //-----------get login user info-------------------------------------
+
+
     this.authService.getuserlogin().subscribe((res: any) => {
       this.getusername = res.name
     })
 
-    setTimeout(() => { this.ngOnInit() }, 1000 * 2)
+    // setTimeout(() => { this.ngOnInit() }, 1000 * 2)
 
     //-----------get all notification-----------------------------------------
     this.snoozeService.notificationget().subscribe((res: any) => {
@@ -78,21 +95,21 @@ export class NavbarComponent implements OnInit {
     //-----------get unread notification status---------------------------------------------
     this.snoozeService.getunreadnotification().subscribe((res: any) => {
       this.getunreadnotification = [res]
+      this.unreadMessageCount = res?.data ? res?.data?.length : 0;
       this.getunreadnotification.map(gets => {
         this.getunreadLength = gets.data
       })
     })
 
 
-    // this.snoozeService.getGames().subscribe(getdata=>{
-    //   console.log(getdata)
-    //   this.getunreadnotification=getdata
-    // })
   }
 
 
   //--------------------Notification click and update true---------------------------------------
   onclickstatus(id) {
+    if (this.unreadMessageCount > 0) {
+      this.unreadMessageCount -= 1;
+    }
     this.notification_id = id
     this.statusofnotification = true
     if (this.notification_id === id) {
@@ -113,11 +130,15 @@ export class NavbarComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
+
+        localStorage.removeItem('Token');
+        localStorage.removeItem('currentUserLogin')
+        localStorage.removeItem('user')
+
         this.authService.logoutuser().subscribe((res: any) => {
-          localStorage.removeItem('Token');
-          localStorage.removeItem('currentUserLogin')
-          localStorage.removeItem('user')
+
         })
+        this.rxjsDataService.updateLoginStatus(false)
         this.router.navigate(['/login'])
 
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -132,7 +153,6 @@ export class NavbarComponent implements OnInit {
     })
 
   }
-
 
 
 }

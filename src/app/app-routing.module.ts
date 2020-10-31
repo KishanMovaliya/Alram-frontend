@@ -16,25 +16,25 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard], },
 
   //--------------------home path----------------------------------------------------------
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent ,canActivate: [AuthGuard]},
 
   //--------------------egistration path-----------------------------------------------------
-  { path: 'registration', component: SignupComponent },
+  { path: 'registration', component: SignupComponent, canActivate: [AuthGuard]},
 
   //--------------------login path------------------------------------------------------------
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
 
   //--------------------sheduleemail path------------------------------------------------
-  { path: 'sheduleemail', component: ShecduleComponent },
+  { path: 'sheduleemail', component: ShecduleComponent,canActivate: [AuthGuard] },
 
   //---------------------Profile path ----------------------------------------------------------
-  { path: 'profileget', component: ProfileComponent },
+  { path: 'profileget', component: ProfileComponent,canActivate: [AuthGuard] },
 
   //--------------------snoozeOn-------------------------------------------------------------
-  { path: 'snoozegetOn', component: SnoozeOnComponent },
+  { path: 'snoozegetOn', component: SnoozeOnComponent ,canActivate: [AuthGuard]},
 
   //--------------------page not found--------------------------------------------------------- --
-  { path: '**', component: NoPageFoundComponent }
+  { path: '**', component: NoPageFoundComponent ,canActivate: [AuthGuard]}
 
 ];
 
