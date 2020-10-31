@@ -1,6 +1,5 @@
-import { Component, OnInit, ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import {  Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
 import { RxjsdataService } from 'src/app/service/rxjsdata.service';
 import { SnoozeService } from 'src/app/service/snooze.service';
@@ -13,26 +12,16 @@ import Swal from 'sweetalert2';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  currentUser: any
-  username: ''
-  userName: ''
-  mySubscription: any;
-  unreadMessageCount: number = 0;
+ unreadMessageCount: number = 0;
   notification: any
   isLogin: boolean = false;
   notific: any;
   getnotified: any
-  time_get_create: any
-  messageget: any
-  fromuser: any
   getusername: any
-
   notification_id: ''
   public statusofnotification: Boolean
-  getunread: "";
   getunreadnotification: any
   getunreadLength: any
-  countlength = new BehaviorSubject(0);
 
   constructor(public router: Router, public authService: AuthapiService,
     public snoozeService: SnoozeService, public rxjsDataService: RxjsdataService) {
@@ -48,24 +37,11 @@ export class NavbarComponent implements OnInit {
         this.isLogin = isLogin;
       }
     });
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
+  
 
-    this.mySubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-      }
-
-    });
+  
   }
-  ngOnDestroy() {
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
-  }
-
+  
   ngOnInit(): void {
     //-----------get login user info-------------------------------------
 
@@ -74,17 +50,14 @@ export class NavbarComponent implements OnInit {
       this.getusername = res.name
     })
 
-    // setTimeout(() => { this.ngOnInit() }, 1000 * 2)
 
     //-----------get all notification-----------------------------------------
     this.snoozeService.notificationget().subscribe((res: any) => {
       this.notific = [res];
       this.notific.map(ress => {
         this.getnotified = ress.data
+        setTimeout(() => { this.ngOnInit() }, 1000 * 2)
         this.getnotified.map(a => {
-          this.time_get_create = a.createdAt
-          this.messageget = a.message
-          this.fromuser = a.from
           this.notification_id = a._id
           this.statusofnotification = a.statusRead
         })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthapiService } from '../service/authapi.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnoozeService } from '../service/snooze.service';
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   public status: Boolean
   valueChange = "";
   collection = []
-  mySubscription: any;
+
   showSpinner: boolean = true;
 
   getstop = []
@@ -99,17 +99,7 @@ export class HomeComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.emailget = this.currentUser?.userCredentials?.email
     this.useridget=this.currentUser?.userCredentials?._id
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-
-    this.mySubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-      }
-    });
-
+   
     //-----------for day list-----------------------------
     for (let i = 1; i <= 10; i++) {
       this.collection.push(`${i}`);
@@ -118,11 +108,7 @@ export class HomeComponent implements OnInit {
       checkArray: this.fb.array([],)
     })
   }
-  ngOnDestroy() {
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
-  }
+  
 
 
   ngOnInit(): void {
