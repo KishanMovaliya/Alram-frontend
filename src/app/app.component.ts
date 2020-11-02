@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthapiService } from './service/authapi.service';
 
 
@@ -12,7 +13,9 @@ export class AppComponent  {
   title = 'angularNode';
 
 
-  constructor(public authService: AuthapiService) { }
+  constructor(public authService: AuthapiService,public router:Router) { 
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
   ngOnInit() {
     window.addEventListener("beforeunload",  (e)=> {
       this.authService.updateUserStatus();

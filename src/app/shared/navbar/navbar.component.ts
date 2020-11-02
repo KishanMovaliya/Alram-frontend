@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   public statusofnotification: Boolean
   getunreadnotification: any
   getunreadLength: any
+  
 
   constructor(public router: Router, public authService: AuthapiService,
     public snoozeService: SnoozeService, public rxjsDataService: RxjsdataService) {

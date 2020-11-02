@@ -16,20 +16,29 @@
               <div class="form-group">
                 <label>Name</label>
                 <input type="text" class="form-control" formControlName="name" id="name" aria-describedby="nameHelp"
-                  placeholder="Enter Name Here">
-              </div>
+                  placeholder="Enter Name Here" [ngClass]="{ 'is-invalid': submitted && myForm.name.errors }" pInputText>
+                  <div *ngIf="submitted && myForm.name.errors" class="invalid-feedback">
+                    <div *ngIf="myForm.name.errors.required">Username is required</div>
+                  </div>
+                </div>
 
               <!------------------------------------Email Address --------------------------------- -->
               <div class="form-group"> <label class="form-control-label text-muted">Email</label>
-                <input type="text" id="email" formControlName="email" name="email" placeholder="Enter Email Here"
-                  class="form-control">
+                <input type='email' id="email" formControlName="email" name="email" [ngClass]="{ 'is-invalid': submitted && myForm.email.errors }" placeholder="Enter Email Here"
+                  class="form-control" pInputText>
+                  <div *ngIf="submitted && myForm.email.errors" class="invalid-feedback">
+                    <div *ngIf="myForm.email.errors.required">Email is required</div>
+                  </div>
               </div>
 
               <!------------------------------------Password -------------------------------------- -->
               <div class="form-group"> <label class="form-control-label text-muted">Password</label>
                 <input type="password" formControlName="password" id="psw" name="psw" placeholder="Enter Password Here"
-                  class="form-control">
-              </div>
+                  class="form-control" [ngClass]="{ 'is-invalid': submitted && myForm.password.errors }" pInputText>
+                  <div *ngIf="submitted && myForm.password.errors" class="invalid-feedback">
+                    <div *ngIf="myForm.password.errors.required">password is required</div>
+                  </div>
+                </div>
 
               <!---------------------------------- login button -------------------------------------- -->
               <div class="row justify-content-center my-3 px-3"> <button class="btn-block btn-color">Signup</button>
