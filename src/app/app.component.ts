@@ -23,7 +23,7 @@ export class AppComponent  {
         method: "GET",
         headers: new Headers({'Authorization': `Token ${localStorage.getItem('Token')}`}),
     };
-      fetch('http://localhost:4001/user/updateuserStatus/1', options)
+      fetch('http://localhost:5000/user/updateuserStatus/1', options)
     });
 
     setTimeout(() => {
