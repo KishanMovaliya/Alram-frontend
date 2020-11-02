@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import 'rxjs/add/operator/distinctUntilChanged'
 
 @Injectable({
@@ -10,11 +10,11 @@ export class RxjsdataService {
   constructor() { }
 
 
-  public isLoginSerivceSubject = new  BehaviorSubject(false);
+  public isLoginSerivceSubject = new BehaviorSubject(false);
   public isLoginSerivce = this.isLoginSerivceSubject.asObservable().distinctUntilChanged();
 
-
-  updateLoginStatus(isLogin){
+  //-----------update status user-----------------------
+  updateLoginStatus(isLogin) {
     this.isLoginSerivceSubject.next(isLogin)
   }
 }

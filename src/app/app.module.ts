@@ -42,7 +42,7 @@ import { NoPageFoundComponent } from './components/no-page-found/no-page-found.c
     LoadingSpinnerComponent,
     SnoozeOnComponent,
     NoPageFoundComponent,
-  
+
   ],
   imports: [
     BrowserModule,

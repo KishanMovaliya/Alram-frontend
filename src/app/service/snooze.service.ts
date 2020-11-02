@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap ,catchError,map} from 'rxjs/operators';
-import  {INotification} from '../Model/NotificatioModel'
 
 
 @Injectable({
@@ -10,7 +8,7 @@ import  {INotification} from '../Model/NotificatioModel'
 })
 export class SnoozeService {
   //--------------defiend base url-----------------------------------------
-  baseUri: string = 'http://localhost:4001/';
+  baseUri: string = 'http://localhost:5000/';
 
   //--------------Defiend headers------------------------------------------
   headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -28,21 +26,23 @@ export class SnoozeService {
     )
   }
 
-   //get notification
-   notificationget(){
+  //get notification
+  notificationget(): Observable<any> {
     return this.http.get(`${this.baseUri}user/getnotification`)
- }
+  }
 
- changestatusnotification(id, data){
-  let url = `${this.baseUri}user/notificationstatus/${id}`
-  return this.http.put(url, data, { headers: this.headers }).pipe(
-  )
- }
+  //get notification status
+  changestatusnotification(id, data) {
+    let url = `${this.baseUri}user/notificationstatus/${id}`
+    return this.http.put(url, data, { headers: this.headers }).pipe(
+    )
+  }
 
-   //get notification
-   getunreadnotification(){
+  //get notification
+  getunreadnotification(): Observable<any> {
     return this.http.get(`${this.baseUri}user/getunreadstatus`)
-   }
+
+  }
 
 
 }

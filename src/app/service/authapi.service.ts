@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 export class AuthapiService {
 
   //--------------defiend base url-----------------------------------------
-  baseUri: string = 'http://localhost:4001/';
+  baseUri: string = 'http://localhost:5000/';
 
   //--------------Defiend headers------------------------------------------
   headers = new HttpHeaders().set('Content-Type', 'application/json');
