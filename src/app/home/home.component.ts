@@ -8,15 +8,18 @@ import { SnoozeService } from '../service/snooze.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray } from '@angular/forms';
 import { FormControl } from '@angular/forms';
-
+import { ajax } from 'rxjs/ajax';
+import { map } from 'rxjs/operators'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+
 })
 export class HomeComponent implements OnInit {
-  
+
   submitted = false
   currentUser: any;
   emailget: any
@@ -51,7 +54,7 @@ export class HomeComponent implements OnInit {
   getuseremail: Array<any> = [];
   useremail: any = []
   closeResult = '';
-  useridget:any
+  useridget: any
 
   //-----------Option days----------------------------------------
   days = [
@@ -95,11 +98,11 @@ export class HomeComponent implements OnInit {
   form: FormGroup;
 
   constructor(public authService: AuthapiService, public modalService: NgbModal, private fb: FormBuilder,
-    public formBuilder: FormBuilder, public router: Router, public Authservice: SnoozeService) {
+    public formBuilder: FormBuilder, private toastr: ToastrService, public router: Router, public Authservice: SnoozeService) {
     this.currentUser = JSON.parse(localStorage.getItem('user'))
     this.emailget = this.currentUser?.userCredentials?.email
-    this.useridget=this.currentUser?.userCredentials?._id
-   
+    this.useridget = this.currentUser?.userCredentials?._id
+
     //-----------for day list-----------------------------
     for (let i = 1; i <= 10; i++) {
       this.collection.push(`${i}`);
@@ -107,8 +110,8 @@ export class HomeComponent implements OnInit {
     this.form = this.fb.group({
       checkArray: this.fb.array([],)
     })
+
   }
-  
 
 
   ngOnInit(): void {
@@ -136,6 +139,7 @@ export class HomeComponent implements OnInit {
       })
     })
   }
+
 
 
   //----------------Create Alaram Form----------------------------
@@ -228,7 +232,7 @@ export class HomeComponent implements OnInit {
     this.clockForm.value.email = this.emailget
     this.status = true
     this.clockForm.value.status = this.status
-    this.clockForm.value.userId=this.useridget
+    this.clockForm.value.userId = this.useridget
     if (this.clockForm.valid) {
       this.authService.createemailshedule(this.clockForm.value).subscribe(
         (data: any) => {
@@ -315,11 +319,12 @@ export class HomeComponent implements OnInit {
   //-----------submit user add------------------------------------------
   submitForm() {
     this.authService.updateemailuser(this.idget, this.form.value).subscribe(res => {
+      this.toastr.info('SuccessFully Added!', 'User!');
       this.modalService.dismissAll();
     })
   }
 
-//-----------open popup-----------------------------------------------
+  //-----------open popup-----------------------------------------------
   opens(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
