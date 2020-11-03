@@ -25,7 +25,8 @@ import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
 import { HttpConfigInterceptor } from './httpconfig.interceptor';
 import { SnoozeService } from './service/snooze.service';
 import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
-
+import { ToastrModule } from 'ngx-toastr';
+import { FooterComponent } from './shared/footer/footer.component';
 
 
 
@@ -42,6 +43,7 @@ import { NoPageFoundComponent } from './components/no-page-found/no-page-found.c
     LoadingSpinnerComponent,
     SnoozeOnComponent,
     NoPageFoundComponent,
+    FooterComponent,
 
   ],
   imports: [
@@ -58,6 +60,7 @@ import { NoPageFoundComponent } from './components/no-page-found/no-page-found.c
     NgToggleModule,  
     UiSwitchModule,
     NumberPickerModule,
+    ToastrModule.forRoot(), 
   ],
   providers: [AuthapiService,SnoozeService,RxjsdataService,
     {provide:HTTP_INTERCEPTORS, useClass:HttpConfigInterceptor, multi:true}

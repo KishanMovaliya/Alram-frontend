@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
 import { RxjsdataService } from 'src/app/service/rxjsdata.service';
 import { SnoozeService } from 'src/app/service/snooze.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
- unreadMessageCount: number = 0;
+  unreadMessageCount: number = 0;
   notification: any
   isLogin: boolean = false;
   notific: any;
@@ -22,27 +22,27 @@ export class NavbarComponent implements OnInit {
   public statusofnotification: Boolean
   getunreadnotification: any
   getunreadLength: any
-  
+
 
   constructor(public router: Router, public authService: AuthapiService,
     public snoozeService: SnoozeService, public rxjsDataService: RxjsdataService) {
-    
-      this.rxjsDataService.isLoginSerivce.subscribe((isLogin) => {
+
+    this.rxjsDataService.isLoginSerivce.subscribe((isLogin) => {
       if (!isLogin) {
         if (localStorage.getItem('Token')) {
           this.rxjsDataService.updateLoginStatus(true)
-        }else{
-          this.isLogin  = isLogin;
+        } else {
+          this.isLogin = isLogin;
         }
       } else {
         this.isLogin = isLogin;
       }
     });
-  
 
-  
+
+
   }
-  
+
   ngOnInit(): void {
     //-----------get login user info-------------------------------------
 
