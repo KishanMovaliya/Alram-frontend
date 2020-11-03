@@ -10,35 +10,35 @@
 
         <!--------------------------------Home Link-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item ">
-          <a class="nav-link " routerLinkActive="active" routerLink="/">Home<span class="sr-only">(current)</span></a>
+          <a class="nav-link " placement="bottom" ngbTooltip="Home" routerLinkActive="active" routerLink="/">Home<span class="sr-only">(current)</span></a>
         </li>
 
 
         <!--------------------------------Login Link-------------------------------------------------------------- -->
         <li *ngIf="!isLogin" class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
+          <a class="nav-link" placement="bottom" ngbTooltip="Login" routerLinkActive="active" routerLink="/login">Login</a>
         </li>
 
         <!--------------------------------Signup Link-------------------------------------------------------------- -->
         <li *ngIf="!isLogin" class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/registration">Signup</a>
+          <a class="nav-link" placement="bottom" ngbTooltip="Signup" routerLinkActive="active" routerLink="/registration">Signup</a>
         </li>
 
-        <!--------------------------------profile user show-------------------------------------------------------------- -->
+        <!--------------------------------Add shedule-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
+          <a class="nav-link" placement="bottom" ngbTooltip="shedule" [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
             Shedule</a>
         </li>
 
         <!--------------------------------currentUser show-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" [routerLink]="['/profileget']" routerLinkActive="active">{{getusername}}</a>
+          <a class="nav-link" placement="bottom" ngbTooltip="profile" [routerLink]="['/profileget']" routerLinkActive="active">{{getusername}}</a>
         </li>
 
 
         <!--------------------------------Logout click Link-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" style="cursor: pointer;" routerLinkActive="active" (click)="logout()">Logout</a>
+          <a class="nav-link" placement="bottom" ngbTooltip="Logout" style="cursor: pointer;" routerLinkActive="active" (click)="logout()">Logout</a>
         </li>
 
         

@@ -7,7 +7,11 @@
     <div class="form-group">
       <label class="labelclass">
         Date
-        <input class="form-control"  placeholder="Select The date" formControlName="date" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
+        <input class="form-control"  placeholder="Select The date" formControlName="date" 
+        [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" [ngClass]="{ 'is-invalid': submitted && myForm.date.errors }">
+        <div *ngIf="submitted && myForm.date.errors" class="invalid-feedback">
+          <div *ngIf="myForm.date.errors.required">Select Date is required</div>
+        </div>
         <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
       </label>
     </div>
@@ -24,7 +28,11 @@
     <div class="form-group">
       <label class="labelclass">
         Select Time for Send Email on Time
-        <input class="form-control" placeholder="Select Time send Email" formControlName="time" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
+        <input class="form-control" placeholder="Select Time send Email" 
+        formControlName="time" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" [ngClass]="{ 'is-invalid': submitted && myForm.time.errors }">
+        <div *ngIf="submitted && myForm.time.errors" class="invalid-feedback">
+          <div *ngIf="myForm.time.errors.required">Select New Time is required</div>
+        </div>
         <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
       </label>
     </div>

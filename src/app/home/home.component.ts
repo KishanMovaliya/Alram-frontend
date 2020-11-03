@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthapiService } from '../service/authapi.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -8,8 +8,6 @@ import { SnoozeService } from '../service/snooze.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray } from '@angular/forms';
 import { FormControl } from '@angular/forms';
-import { ajax } from 'rxjs/ajax';
-import { map } from 'rxjs/operators'
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -145,17 +143,21 @@ export class HomeComponent implements OnInit {
   //----------------Create Alaram Form----------------------------
   createalaramForm() {
     this.clockForm = this.formBuilder.group({
-      date: [''],
-      time: [''],
-      day: [''],
-      status: [''],
-      stepday: ['']
+      date: ['', [Validators.required]],
+      time: ['', [Validators.required]],
+      day: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      stepday: ['', [Validators.required]]
     });
   }
 
+
+
+  get myForm() {
+    return this.clockForm.controls;
+  }
   //-----------Chnage stepdays-------------------------------------
   changedays(e) {
-
     this.daysstep.setValue(e.target.value, {
       onlySelf: true
     })
@@ -177,6 +179,7 @@ export class HomeComponent implements OnInit {
     if (this.idget === id) {
       this.authService.updateStatus(this.idget, this.clockForm.value)
         .subscribe(res => {
+          this.toastr.success('SuccessFully changes!', 'Status!');
         })
     }
   }
@@ -218,10 +221,14 @@ export class HomeComponent implements OnInit {
     this.submitted = true
     this.clockForm.value.day = this.selection
     this.clockForm.value.status = this.valueChange
-    this.authService.updateshedule(this.idget, this.clockForm.value)
-      .subscribe(res => {
-        this.router.navigate(['/'])
-      })
+    if (this.clockForm.valid) {
+
+      this.authService.updateshedule(this.idget, this.clockForm.value)
+        .subscribe(res => {
+          this.router.navigate(['/'])
+          this.toastr.success('SuccessFully update!', 'Time!');
+        })
+    }
 
   }
 
@@ -259,6 +266,7 @@ export class HomeComponent implements OnInit {
   deleteshed(id) {
     this.idget = id
     this.authService.deleteshedule(this.idget).subscribe((data) => {
+      this.toastr.success('SuccessFully delete!', 'shedule!');
     })
   }
 
@@ -319,7 +327,7 @@ export class HomeComponent implements OnInit {
   //-----------submit user add------------------------------------------
   submitForm() {
     this.authService.updateemailuser(this.idget, this.form.value).subscribe(res => {
-      this.toastr.info('SuccessFully Added!', 'User!');
+      this.toastr.success('SuccessFully Added!', 'User!');
       this.modalService.dismissAll();
     })
   }
