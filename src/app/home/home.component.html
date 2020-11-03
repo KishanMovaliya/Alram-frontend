@@ -1,4 +1,5 @@
 <app-loading-spinner *ngIf=showSpinner></app-loading-spinner>
+
 <div class="container mainclass" *ngIf="getShedule?.length > 0;else emptyShedule">
   <div>
     <!-------------------------Update email shedule form ---------------------------------------->
@@ -7,14 +8,17 @@
         <!--------------------- choose time ----------------------------------------------------->
         <label for="alarmTime" class="">Choose time </label>
         <input class="form-control-plaintext" formControlName="time" placeholder="{{shedule.time | date: 'h:mm:ss a' }}"
-          [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
+          [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"  [ngClass]="{ 'is-invalid': submitted && myForm.time.errors }">
+          <div *ngIf="submitted && myForm.time.errors" class="invalid-feedback">
+            <div *ngIf="myForm.time.errors.required">Select New Time is required</div>
+          </div>
         <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
 
         <!-----------------------Select custom days------------------------------------------>
         <div>
           <p>
             <button type="button" class="btn btn-outline-primary" (click)="clickselect(i)"
-              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" placement="top" ngbTooltip="Select Days"> 
               Select custom Days
             </button>
           </p>
@@ -25,7 +29,10 @@
                   <div class="form-check">
                     <div *ngFor="let item of days">
                       <input class="form-check-input" type="checkbox" [checked]="getSelection(item)"
-                        (change)="changeHandler(item, $event)" formControlName="day" />
+                        (change)="changeHandler(item, $event)" formControlName="day"  [ngClass]="{ 'is-invalid': submitted && myForm.day.errors }" />
+                        <div *ngIf="submitted && myForm.day.errors" class="invalid-feedback">
+                          <div *ngIf="myForm.day.errors.required">Day is required</div>
+                        </div>
                       <label class="form-check-label">{{item.day}}</label>
                     </div>
                   </div>
@@ -39,7 +46,7 @@
 
         <!-- ----------------------------On Off Button------------------------------------->
         <div class="toogleclass">
-          <div>
+          <div placement="top" ngbTooltip="On Off Switch">
             <ui-switch [(ngModel)]="shedule.status" (valueChange)="onValueChange($event)" (click)="getid(shedule._id)"
               formControlName="status" uncheckedLabel="off" checkedLabel="on">
             </ui-switch>
@@ -48,16 +55,16 @@
 
         <!------------------------------- Add user Buttone --------------------------------------------->
         <span class="deleteButtone">
-          <button type="button" (click)="opens(content)" class="btn btn-info">Add user</button>
+          <button type="button" (click)="opens(content)" placement="top" ngbTooltip="Add User" class="btn btn-info">Add user</button>
         </span>
 
         <!------------------------------ Delete Shdeule ----------------------------------------->
         <span class="delete deleteButtone" (click)="removeshedule(shedule, i)">
-          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-danger" placement="top" ngbTooltip="Delete Shedule">Delete</button>
         </span>
 
          <!------------------------------update shedule--------------------------------------- -->
-         <button type="submit" style="margin: 0 0 0 40px;" class="btn btn-dark btn-block setclass">
+         <button type="submit" style="margin: 0 0 0 40px;" class="btn btn-dark btn-block setclass" placement="top" ngbTooltip="Submit Shedule">
           Set Shedule <i class="fa fa-plus-circle mr-1"></i>
         </button>
       </div>
@@ -66,7 +73,7 @@
     <!-------------------------------- setnew shedule Form-------------------------------------------------->
     <hr>
     <div class="newaddform">
-      <img class="plusicon" (click)="isCollapsedd = !isCollapsedd" [attr.aria-expanded]="!isCollapsedd"
+      <img class="plusicon" placement="top" ngbTooltip="New Shedule" (click)="isCollapsedd = !isCollapsedd" [attr.aria-expanded]="!isCollapsedd"
         aria-controls="collapseExample" src="../../assets/plus-symbol-in-a-rounded-black-square.png">
     </div>
     <div id="collapseExample" [ngbCollapse]="isCollapsedd">
@@ -77,7 +84,10 @@
             <div class="form-group">
               <label for="exampleInputEmail1">Select Time</label>
               <input class="form-control " placeholder="Select Time" formControlName="time" [owlDateTimeTrigger]="dt4"
-                [owlDateTime]="dt4">
+                [owlDateTime]="dt4"  [ngClass]="{ 'is-invalid': submitted && myForm.time.errors }">
+                <div *ngIf="submitted && myForm.time.errors" class="invalid-feedback">
+                  <div *ngIf="myForm.time.errors.required">time is required</div>
+                </div>
               <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
             </div>
 
@@ -86,8 +96,11 @@
               <label class="labelclass">
                 Date
                 <input class="form-control" placeholder="Select The date" formControlName="date"
-                  [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3">
-                <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                  [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3"  [ngClass]="{ 'is-invalid': submitted && myForm.date.errors }">
+                  <div *ngIf="submitted && myForm.date.errors" class="invalid-feedback">
+                    <div *ngIf="myForm.date.errors.required">date is required</div>
+                  </div>
+                  <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
               </label>
             </div>
             <!----------------------------------Choose Step days ------------------------------------------------>
@@ -112,7 +125,7 @@
                       <div class="form-check">
                         <div *ngFor="let item of days">
                           <input class="form-check-input" type="checkbox" [checked]="getSelection(item)"
-                            (change)="changeHandler(item, $event)" formControlName="day" />
+                            (change)="changeHandler(item, $event)" formControlName="day"  />
                           <label class="form-check-label">{{item.day}}</label>
                         </div>
                       </div>

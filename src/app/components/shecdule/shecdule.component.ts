@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthapiService } from 'src/app/service/authapi.service';
 import Swal from 'sweetalert2';
@@ -46,8 +46,8 @@ export class ShecduleComponent implements OnInit {
 
   mainForm() {
     this.sheduleForm = this.fb.group({
-      date: ['',],
-      time: ['',],
+      date: ['',[Validators.required]],
+      time: ['',[Validators.required]],
       status:['',],
       stepday:['',]
 
@@ -86,7 +86,6 @@ export class ShecduleComponent implements OnInit {
             Swal.fire('Oops...', err.error.msg);
           } else {
             Swal.fire('Oops...', 'Something went wrong!', 'error');
-            // this.snackBar.open('Something Went Wrong!');
           }
         }
       );
