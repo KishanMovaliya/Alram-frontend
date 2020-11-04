@@ -23,9 +23,9 @@ export class NavbarComponent implements OnInit {
   getunreadnotification: any
   getunreadLength: any
 
-
   constructor(public router: Router, public authService: AuthapiService,
-    public snoozeService: SnoozeService, public rxjsDataService: RxjsdataService) {
+    public snoozeService: SnoozeService, public rxjsDataService: RxjsdataService,
+   ) {
 
     this.rxjsDataService.isLoginSerivce.subscribe((isLogin) => {
       if (!isLogin) {
@@ -75,9 +75,10 @@ export class NavbarComponent implements OnInit {
       })
     })
 
-
+    
   }
 
+  
 
   //--------------------Notification click and update true---------------------------------------
   onclickstatus(id) {
