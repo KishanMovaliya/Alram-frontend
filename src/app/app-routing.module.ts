@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { ProfileComponent } from './auth/profile/profile.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { BlogCreateComponent } from './components/blog-create/blog-create.component';
+import { BlogComponent } from './components/blog/blog.component';
 import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 import { ShecduleComponent } from './components/shecdule/shecdule.component';
 import { SnoozeOnComponent } from './components/snooze-on/snooze-on.component';
@@ -32,6 +34,11 @@ const routes: Routes = [
 
   //--------------------snoozeOn-------------------------------------------------------------
   { path: 'snoozegetOn', component: SnoozeOnComponent ,canActivate: [AuthGuard]},
+
+  //-------------------- blog create----------------------------------------------------
+  { path: 'blogcreate', component:BlogCreateComponent ,canActivate: [AuthGuard]},
+
+  { path: 'getblog', component:BlogComponent,canActivate: [AuthGuard]},
 
   //--------------------page not found--------------------------------------------------------- --
   { path: '**', component: NoPageFoundComponent ,canActivate: [AuthGuard]}

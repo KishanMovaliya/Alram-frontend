@@ -27,6 +27,8 @@ import { SnoozeService } from './service/snooze.service';
 import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './shared/footer/footer.component';
+import { BlogCreateComponent } from './components/blog-create/blog-create.component';
+import { BlogComponent } from './components/blog/blog.component';
 
 
 
@@ -44,6 +46,8 @@ import { FooterComponent } from './shared/footer/footer.component';
     SnoozeOnComponent,
     NoPageFoundComponent,
     FooterComponent,
+    BlogCreateComponent,
+    BlogComponent,
 
   ],
   imports: [
