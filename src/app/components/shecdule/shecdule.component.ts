@@ -75,6 +75,9 @@ export class ShecduleComponent implements OnInit {
     this.sheduleForm.value.status=this.status
     this.sheduleForm.value.email=this.emailget
     this.sheduleForm.value.userId= this.idget
+    if(this.sheduleForm.invalid){
+      return
+    }
     if(this.sheduleForm.valid){
       this.authService.createemailshedule(this.sheduleForm.value).subscribe(
         (data: any) => {
