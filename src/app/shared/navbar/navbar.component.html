@@ -1,3 +1,4 @@
+<div class="container">
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
     <a class="navbar-brand" style="margin-top: -14px;" routerLink="/">EmailShedule </a>
@@ -5,54 +6,63 @@
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown" style="margin: -25px 0 0 0;
+    ">
       <ul class="navbar-nav mr-auto">
 
         <!--------------------------------Home Link-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item ">
-          <a class="nav-link " placement="bottom" ngbTooltip="Home" routerLinkActive="active" routerLink="/">Home<span class="sr-only">(current)</span></a>
+          <a class="nav-link " class="btn btn-sm animated-button thar-one" placement="bottom" ngbTooltip="Home"
+            routerLinkActive="active" routerLink="/">Home<span class="sr-only">(current)</span></a>
         </li>
 
 
         <!--------------------------------Login Link-------------------------------------------------------------- -->
         <li *ngIf="!isLogin" class="nav-item">
-          <a class="nav-link" placement="bottom" ngbTooltip="Login" routerLinkActive="active" routerLink="/login">Login</a>
+          <a class="nav-link" placement="bottom" class="btn btn-sm animated-button thar-two" ngbTooltip="Login"
+            routerLinkActive="active" routerLink="/login">Login</a>
         </li>
 
         <!--------------------------------Signup Link-------------------------------------------------------------- -->
         <li *ngIf="!isLogin" class="nav-item">
-          <a class="nav-link" placement="bottom" ngbTooltip="Signup" routerLinkActive="active" routerLink="/registration">Signup</a>
+          <a class="nav-link" class="btn btn-sm animated-button thar-three" placement="bottom" ngbTooltip="Signup"
+            routerLinkActive="active" routerLink="/registration">Signup</a>
         </li>
 
         <!--------------------------------Add shedule-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" placement="bottom" ngbTooltip="shedule" [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
+          <a class="nav-link" placement="bottom" class="btn btn-sm animated-button thar-four" ngbTooltip="shedule"
+            [routerLink]="['/sheduleemail']" routerLinkActive="active">Add
             Shedule</a>
         </li>
 
         <!--------------------------------currentUser show-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" placement="bottom" ngbTooltip="profile" [routerLink]="['/profileget']" routerLinkActive="active">{{getusername}}</a>
+          <a class="nav-link" placement="bottom" class="btn btn-sm animated-button thar-one" ngbTooltip="profile"
+            [routerLink]="['/profileget']" routerLinkActive="active">{{getusername}}</a>
         </li>
 
 
         <!--------------------------------Add Blog Link-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" placement="bottom" ngbTooltip="Add Blog" style="cursor: pointer;" [routerLink]="['/blogcreate']" routerLinkActive="active">Add Blog</a>
+          <a class="nav-link" placement="bottom" class="btn btn-sm animated-button thar-two" ngbTooltip="Add Blog"
+            style="cursor: pointer;" [routerLink]="['/blogcreate']" routerLinkActive="active">Add Blog</a>
         </li>
- <!--------------------------------show Blog Link-------------------------------------------------------------- -->
- <li *ngIf="isLogin" class="nav-item">
-  <a class="nav-link" placement="bottom" ngbTooltip="show Blog" style="cursor: pointer;" [routerLink]="['/getblog']" routerLinkActive="active">Blog</a>
-</li>
+        <!--------------------------------show Blog Link-------------------------------------------------------------- -->
+        <li *ngIf="isLogin" class="nav-item">
+          <a class="nav-link" placement="bottom" class="btn btn-sm animated-button thar-three" ngbTooltip="show Blog"
+            style="cursor: pointer;" [routerLink]="['/getblog']" routerLinkActive="active">Blog</a>
+        </li>
 
         <!--------------------------------Logout click Link-------------------------------------------------------------- -->
         <li *ngIf="isLogin" class="nav-item">
-          <a class="nav-link" placement="bottom" ngbTooltip="Logout" style="cursor: pointer;" routerLinkActive="active" (click)="logout()">Logout</a>
+          <a class="nav-link" placement="bottom" class="btn btn-sm animated-button thar-one" ngbTooltip="Logout"
+            style="cursor: pointer;" style="margin: 29px 0 0 0;" routerLinkActive="active" (click)="logout()">Logout</a>
         </li>
 
-      
+
         <!--------------------------------Notifications bell------------------------------------------------------  -->
-        <li *ngIf="isLogin && getunreadLength?.length > 0" class="nav-item">
+        <li *ngIf="isLogin && getunreadLength?.length > 0" style="margin: 30px 0 0 0;" class="nav-item">
           <nav class="navbar navbar-expand-lg ">
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: unset !important;">
               <ul class="nav nav-pills mr-auto justify-content-end">
@@ -97,8 +107,11 @@
           </nav>
         </li>
 
+
+
       </ul>
     </div>
 
   </div>
 </nav>
+</div>

@@ -1,40 +1,62 @@
-<!-- details card section starts from here -->
-<section class="details-card">
-    <div class="container" *ngIf='getallblog'>
-        <div class="row">
-            <div class="col-md-4" *ngFor="let item of getallblog">
-                <div class="card-content">
-                    <div class="card-img">
-                        <img src="https://placeimg.com/380/230/tech" alt="">
-                        <span>
-                            <h4>{{item.title}}</h4>
-                        </span>
-                    </div>
-                    <div class="card-desc">
-                        <h3>{{item.title}}</h3>
-                        <p>{{item.description}}</p>
-                        <h3>{{item.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</h3>
-                        <a href="#" class="btn-card">Read</a>
-                        <i class="fa fa-comment fa-3x" aria-hidden="true" (click)="isCollapsed = !isCollapsed"
-                            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"></i>
-                        <i class="fa fa-thumbs-up fa-3x" aria-hidden="true" (click)='onlikeClick()'></i>
-                        <div id="collapseExample" [ngbCollapse]="isCollapsed">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="search">
-                                        <form [formGroup]="commentForm" (ngSubmit)="addcomment(item._id)">
-                                        <input placeholder="Write a comment" formControlName="comment"  type="text">
-                                        <button type="submit" class="btn btn-info">Submit</button>
-                                    </form>
-                                    </div>
-                                </div>
+<div class="container">
+    <div class="data">
+        <div class="row " *ngIf='getallblog '>
+            <div class="col-md-8">
+
+                <div class="card mb-4 " *ngFor='let data of getallblog | filter:searchText'>
+                    <img class="card-img-top " src="https://placeimg.com/620/200/tech" alt="Card image cap">
+                    <div class="card-body">
+                        <!---------------------- title blog ---------------------------------->
+                        <h2 class="card-title linkclass">{{data.title}}</h2>
+
+                        <!---------------------- description blog ---------------------------------->
+                        <p class="card-text descriptionclass">{{data.description}}</p>
+
+                        <!---------------------- read more blog ---------------------------------->
+                        <p>
+                            <button type="button" (click)="getsingleblog(data._id)" class="btn btn-outline-primary">
+                                Read More
+                            </button>
+
+
+                        </p>
+
+                        <!---------------------- likes ---------------------------------->
+                        <div class="hexagon-wrapper" style="margin-left: 90%;margin-top: -8%;">
+                            <div class="hexagon">
+                                <i class="fa fa-heart-o fa-3x" aria-hidden="true" (click)='onlikeClick(data._id)'></i>
                             </div>
+                            <span style="margin-top: 70%;">{{data.likes?.length}}</span>
                         </div>
+                    </div>
+
+                    <!---------------------- date and author name blog ---------------------------------->
+                    <div class="card-footer text-muted">
+                        Posted on {{data.createdAt | date:'yyyy-MM-dd HH:mm:ss' }} by
+                        <a href="#">{{data.authorName}}</a>
                     </div>
                 </div>
             </div>
 
+
         </div>
+
+
+        <div class="col-md-4">
+
+            <!---------------------- search blog ---------------------------------->
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" type="text" name="search" [(ngModel)]="searchText"
+                            placeholder="Search for Blog...">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-</section>
-<!-- details card section starts from here -->
+</div>

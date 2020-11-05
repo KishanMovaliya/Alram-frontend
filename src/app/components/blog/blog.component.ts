@@ -1,32 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { BlogserviceService } from 'src/app/service/blogservice.service';
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.scss']
+  styleUrls: ['./blog.component.scss'],
+  
 })
 export class BlogComponent implements OnInit {
   getblogs: any = []
-  getallblog: any = []
+  getallblog: Observable<any>;
   public isCollapsed = true;
   getblogid: any
-  commentForm: FormGroup;
   submitted = false
+  selection = []
+  searchText
   currentUser: any;
   emailget: any;
   useridget: any;
+  username: any
+
 
   constructor(public blogservice: BlogserviceService, private toastr: ToastrService,
-    public formBuilder: FormBuilder) {
-      this.currentUser = JSON.parse(localStorage.getItem('user'))
-      this.emailget = this.currentUser?.userCredentials?.email
-      this.useridget = this.currentUser?.userCredentials?._id
-     }
+    public router: Router) {
+    this.currentUser = JSON.parse(localStorage.getItem('user'))
+    this.emailget = this.currentUser?.userCredentials?.email
+    this.useridget = this.currentUser?.userCredentials?._id
+    this.username = this.currentUser?.userCredentials?.name
+
+  }
 
   ngOnInit(): void {
+
     this.blogservice.getblog().subscribe(res => {
       this.getblogs = [res]
       this.getblogs.map(r => {
@@ -34,36 +43,23 @@ export class BlogComponent implements OnInit {
         this.getblogid = r._id
       })
     })
-    this.createCommentForm()
+
   }
 
-   //----------------Create Blog Form----------------------------
-   createCommentForm() {
-    this.commentForm = this.formBuilder.group({
-      comment: ['', [Validators.required]],
-      userId: ['',]
-    });
+  //-----------------navigate singel blog-----------------------
+  getsingleblog(id) {
+    this.getblogid = id
+    this.router.navigate(['blogdetails', this.getblogid]);
   }
 
-  get myForm() {
-    return this.commentForm.controls;
-  }
 
-  onlikeClick() {
-    this.toastr.success("successfully  like")
-  }
-
-  addcomment(id){
-      this.submitted = true
-      this.getblogid=id
-      this.commentForm.value.userId=this.useridget
-      console.log(this.getblogid,this.commentForm.value)
-      if(this.commentForm.valid){
-        this.blogservice.addcomment(this.getblogid,this.commentForm.value).subscribe(res=>{
-          console.log(res)
-        })
-      }
-      
+  //-----------like click button------------------------------------
+  onlikeClick(id) {
+    this.getblogid = id
+    this.useridget
+    this.blogservice.addlike(this.getblogid, { likes: this.useridget }).subscribe(res => {
+      this.toastr.success("successfully  Like")
+    })
   }
 
 }

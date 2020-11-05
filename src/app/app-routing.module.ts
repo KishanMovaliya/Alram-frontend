@@ -4,6 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { ProfileComponent } from './auth/profile/profile.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { BlogCreateComponent } from './components/blog-create/blog-create.component';
+import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { NoPageFoundComponent } from './components/no-page-found/no-page-found.component';
 import { ShecduleComponent } from './components/shecdule/shecdule.component';
@@ -36,9 +37,11 @@ const routes: Routes = [
   { path: 'snoozegetOn', component: SnoozeOnComponent ,canActivate: [AuthGuard]},
 
   //-------------------- blog create----------------------------------------------------
-  { path: 'blogcreate', component:BlogCreateComponent ,canActivate: [AuthGuard]},
+  { path: 'blogcreate', component: BlogCreateComponent ,canActivate: [AuthGuard]},
 
-  { path: 'getblog', component:BlogComponent,canActivate: [AuthGuard]},
+  { path: 'getblog', component: BlogComponent,canActivate: [AuthGuard]},
+
+  {path: 'blogdetails/:id', component: BlogDetailsComponent,canActivate: [AuthGuard]},
 
   //--------------------page not found--------------------------------------------------------- --
   { path: '**', component: NoPageFoundComponent ,canActivate: [AuthGuard]}

@@ -29,7 +29,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BlogCreateComponent } from './components/blog-create/blog-create.component';
 import { BlogComponent } from './components/blog/blog.component';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 
 
 
@@ -48,6 +49,7 @@ import { BlogComponent } from './components/blog/blog.component';
     FooterComponent,
     BlogCreateComponent,
     BlogComponent,
+    BlogDetailsComponent,
 
   ],
   imports: [
@@ -65,6 +67,7 @@ import { BlogComponent } from './components/blog/blog.component';
     UiSwitchModule,
     NumberPickerModule,
     ToastrModule.forRoot(), 
+    Ng2SearchPipeModule,
   ],
   providers: [AuthapiService,SnoozeService,RxjsdataService,
     {provide:HTTP_INTERCEPTORS, useClass:HttpConfigInterceptor, multi:true}
