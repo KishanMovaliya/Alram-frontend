@@ -222,7 +222,6 @@ export class HomeComponent implements OnInit {
     this.clockForm.value.day = this.selection
     this.clockForm.value.status = this.valueChange
     if (this.clockForm.valid) {
-
       this.authService.updateshedule(this.idget, this.clockForm.value)
         .subscribe(res => {
           this.router.navigate(['/'])

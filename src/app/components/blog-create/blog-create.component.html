@@ -1,21 +1,25 @@
 <div class="container" style=" padding: 96px 0 0 1px;">
     <form [formGroup]="blogcreateForm" (ngSubmit)="createBlog()">
         <div class="form-group">
+            <!---------------------- title blog ---------------------------------->
             <label for="exampleInputtitle">Blog Titile </label>
-            <input type="text" class="form-control" id="exampleInputtitle" 
-                placeholder="Enter Title Blog" formControlName="title" [ngClass]="{ 'is-invalid': submitted && myForm.title.errors }" >
-                <div *ngIf="submitted && myForm.title.errors" class="invalid-feedback">
-                    <div *ngIf="myForm.title.errors.required"> Title is required</div>
-                  </div>
+            <input type="text" class="form-control" id="exampleInputtitle" placeholder="Enter Title Blog"
+                formControlName="title" [ngClass]="{ 'is-invalid': submitted && myForm.title.errors }">
+            <div *ngIf="submitted && myForm.title.errors" class="invalid-feedback">
+                <div *ngIf="myForm.title.errors.required"> Title is required</div>
             </div>
+        </div>
+
+        <!---------------------- Description blog ---------------------------------->
         <div class="form-group">
             <label for="exampleInputDescription">Description</label>
-            <input type="text" class="form-control" id="exampleInputDescription" 
-            placeholder="Description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && myForm.description.errors }">
+            <input type="text" class="form-control" id="exampleInputDescription" placeholder="Description"
+                formControlName="description" [ngClass]="{ 'is-invalid': submitted && myForm.description.errors }">
             <div *ngIf="submitted && myForm.description.errors" class="invalid-feedback">
                 <div *ngIf="myForm.description.errors.required"> Description is required</div>
-              </div>
+            </div>
         </div>
+        <!---------------------- submit blog ---------------------------------->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
